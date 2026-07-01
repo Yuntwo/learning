@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1440px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    display: flex; flex-direction: column;
+    padding: 80px 70px;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 8px 24px; font-size: 24px;
+    letter-spacing: 2px; margin-bottom: 40px;
+    align-self: flex-start;
+  }
+  .title { font-size: 72px; font-weight: 800; line-height: 1.3; margin-bottom: 20px; }
+  .title .highlight { color: #e94560; }
+  .subtitle { font-size: 32px; color: rgba(255,255,255,0.7); margin-bottom: 50px; }
+  .points { flex: 1; display: flex; flex-direction: column; gap: 22px; }
+  .point {
+    display: flex; align-items: center; gap: 24px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 26px 32px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .point-num {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: linear-gradient(135deg, #e94560, #c23152);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 700; flex-shrink: 0;
+  }
+  .point-text { font-size: 32px; font-weight: 600; }
+  .point-desc { font-size: 24px; color: rgba(255,255,255,0.6); margin-top: 4px; font-weight: 400; line-height: 1.4; }
+  .footer {
+    margin-top: 40px; display: flex; align-items: center;
+    justify-content: space-between; padding-top: 26px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .source { font-size: 24px; color: rgba(255,255,255,0.5); }
+  .tag {
+    background: rgba(233,69,96,0.3); border: 1px solid rgba(233,69,96,0.5);
+    border-radius: 12px; padding: 6px 18px; font-size: 22px; color: #e94560;
+    margin-left: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="badge">JAVA 并发编程</div>
+  <div class="title">线程池的<span class="highlight">经典场景</span><br/>与设计心法</div>
+  <div class="subtitle">从"能跑起来"到"能观测、能兜底、能扩展"</div>
+  <div class="points">
+    <div class="point">
+      <div class="point-num">1</div>
+      <div>
+        <div class="point-text">两大场景：异步任务 + 定时心跳</div>
+        <div class="point-desc">邮件/通知用 ThreadPoolExecutor，心跳用 ScheduledThreadPoolExecutor 递归再调度</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">2</div>
+      <div>
+        <div class="point-text">三步执行：核心线程 → 队列 → max</div>
+        <div class="point-desc">队列是第二关，理解顺序才谈得上参数调优</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">3</div>
+      <div>
+        <div class="point-text">队列选型决定稳定性</div>
+        <div class="point-desc">Linked 无界小心 OOM，Array 有界才有背压</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">4</div>
+      <div>
+        <div class="point-text">beforeExecute/afterExecute 埋点</div>
+        <div class="point-desc">ThreadLocal 记录耗时，别忘了 remove 防泄漏</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">5</div>
+      <div>
+        <div class="point-text">拒绝策略要"落地"</div>
+        <div class="point-desc">默认丢弃太危险，自定义落库 + 告警才是生产姿势</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">掘金 · DannyIdea</div>
+    <div>
+      <span class="tag">#Java</span>
+      <span class="tag">#线程池</span>
+    </div>
+  </div>
+</body>
+</html>

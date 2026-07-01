@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MySQL 间隙锁封面</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1080px;
+      height: 1440px;
+      overflow: hidden;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #f5f1e8;
+      background:
+        radial-gradient(circle at top left, rgba(255, 190, 92, 0.18), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(97, 217, 255, 0.18), transparent 35%),
+        linear-gradient(140deg, #17120f 0%, #241b16 42%, #0f1a20 100%);
+      position: relative;
+    }
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0.2));
+    }
+    .wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 76px 72px 68px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 12px 22px;
+      border: 1px solid rgba(255, 197, 106, 0.4);
+      background: rgba(255, 197, 106, 0.12);
+      color: #ffcd7d;
+      border-radius: 999px;
+      font-size: 24px;
+      letter-spacing: 2px;
+      margin-bottom: 34px;
+    }
+    .title {
+      font-size: 82px;
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+    .title .accent { color: #ffb35c; }
+    .subtitle {
+      margin-top: 22px;
+      font-size: 32px;
+      line-height: 1.45;
+      color: rgba(245, 241, 232, 0.78);
+      max-width: 860px;
+    }
+    .cards {
+      margin-top: 62px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .card {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 24px;
+      padding: 28px 30px;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(10px);
+    }
+    .num {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ffb860, #ff7b54);
+      color: #22150d;
+      font-size: 34px;
+      font-weight: 900;
+    }
+    .card-title {
+      font-size: 34px;
+      line-height: 1.2;
+      font-weight: 700;
+      color: #fff3df;
+    }
+    .card-desc {
+      margin-top: 8px;
+      font-size: 25px;
+      line-height: 1.45;
+      color: rgba(245, 241, 232, 0.72);
+    }
+    .footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .source {
+      font-size: 24px;
+      color: rgba(245, 241, 232, 0.56);
+    }
+    .tags {
+      display: flex;
+      gap: 12px;
+    }
+    .tag {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(97, 217, 255, 0.3);
+      background: rgba(97, 217, 255, 0.12);
+      color: #8ce7ff;
+      font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="wrap">
+    <div class="badge">MYSQL / INNODB</div>
+    <div class="title">六个案例<br /><span class="accent">搞懂间隙锁</span></div>
+    <div class="subtitle">别再把 <code>FOR UPDATE</code> 理解成“只锁一行”了。真正决定锁范围的，是索引、扫描路径和停止位置。</div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="num">1</div>
+        <div>
+          <div class="card-title">唯一索引命中，通常只锁记录</div>
+          <div class="card-desc">`order_id + order_type` 这种精确锁单，影响面最小。</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="num">2</div>
+        <div>
+          <div class="card-title">查不到数据，也可能锁住 gap</div>
+          <div class="card-desc">不存在的唯一键定位到相邻区间，插入照样可能被卡。</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="num">3</div>
+        <div>
+          <div class="card-title">用户维度批量查，更容易锁范围</div>
+          <div class="card-desc">`user_id + status` 这类范围读取，比按单号锁单更容易带出间隙锁。</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="num">4</div>
+        <div>
+          <div class="card-title">`LIMIT` 也会改锁范围</div>
+          <div class="card-desc">锁的边界取决于引擎实际扫描到哪里，而不是只看 SQL 长什么样。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="source">source: 51CTO + content_order 实战映射</div>
+      <div class="tags">
+        <span class="tag">#MySQL</span>
+        <span class="tag">#InnoDB</span>
+        <span class="tag">#数据库锁</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

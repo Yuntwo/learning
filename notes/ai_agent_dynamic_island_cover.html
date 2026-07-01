@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1440px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    display: flex; flex-direction: column;
+    padding: 80px 70px;
+  }
+  .notch {
+    align-self: center;
+    width: 360px; height: 40px;
+    background: #000;
+    border-radius: 0 0 24px 24px;
+    margin-top: -80px; margin-bottom: 36px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .notch .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .notch .g { background: #34d399; box-shadow: 0 0 8px #34d399; }
+  .notch .y { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
+  .notch .r { background: #f87171; box-shadow: 0 0 8px #f87171; }
+  .notch .label { font-size: 18px; color: rgba(255,255,255,0.7); margin-left: 6px; letter-spacing: 1px; }
+  .badge {
+    display: inline-block; align-self: flex-start;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 8px 24px; font-size: 24px;
+    letter-spacing: 2px; margin-bottom: 32px;
+  }
+  .title { font-size: 76px; font-weight: 800; line-height: 1.25; margin-bottom: 18px; }
+  .title .highlight { color: #e94560; }
+  .subtitle { font-size: 32px; color: rgba(255,255,255,0.7); margin-bottom: 48px; line-height: 1.4; }
+  .points { flex: 1; display: flex; flex-direction: column; gap: 22px; }
+  .point {
+    display: flex; align-items: center; gap: 24px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 26px 32px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .point-num {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: linear-gradient(135deg, #e94560, #c23152);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 700; flex-shrink: 0;
+  }
+  .point-text { font-size: 34px; font-weight: 600; }
+  .point-desc { font-size: 25px; color: rgba(255,255,255,0.6); margin-top: 4px; font-weight: 400; }
+  .footer {
+    margin-top: 40px; display: flex; align-items: center;
+    justify-content: space-between; padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .source { font-size: 24px; color: rgba(255,255,255,0.5); }
+  .tags { display: flex; gap: 12px; }
+  .tag {
+    background: rgba(233,69,96,0.3); border: 1px solid rgba(233,69,96,0.5);
+    border-radius: 12px; padding: 6px 18px; font-size: 22px; color: #ff7a93;
+  }
+</style>
+</head>
+<body>
+  <div class="notch">
+    <span class="dot g"></span><span class="dot y"></span><span class="dot r"></span>
+    <span class="label">3 agents running…</span>
+  </div>
+  <div class="badge">AI 编程 · 产品观察</div>
+  <div class="title">把 notch 变成<br><span class="highlight">Agent 控制台</span></div>
+  <div class="subtitle">多 Agent 并行时代，瓶颈从「写代码」变成「盯代理」</div>
+  <div class="points">
+    <div class="point">
+      <div class="point-num">1</div>
+      <div>
+        <div class="point-text">notch = 代理舰队控制塔</div>
+        <div class="point-desc">谁在跑 / 谁等你 / 谁跑完，一眼看全</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">2</div>
+      <div>
+        <div class="point-text">审批 · 答疑 · 跳转 都在 notch 完成</div>
+        <div class="point-desc">不切窗口就能 Allow/Deny、回答提问、一键跳回终端</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">3</div>
+      <div>
+        <div class="point-text">shell hooks + 本地 socket 接入</div>
+        <div class="point-desc">无云 · 无账号 · 无 telemetry，app 没开也不阻塞代理</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">4</div>
+      <div>
+        <div class="point-text">桌宠陪伴 + 手机接力远程审批</div>
+        <div class="point-desc">离开电脑也能在手机上代答，监督半径拉满</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">5</div>
+      <div>
+        <div class="point-text">原生 Swift vs Electron 两条路线</div>
+        <div class="point-desc">付费买断 / 开源 / 公司内部自用，三种形态并存</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">AI 编程工具观察</div>
+    <div class="tags"><span class="tag">#AI编程</span><span class="tag">#开发者工具</span></div>
+  </div>
+</body>
+</html>

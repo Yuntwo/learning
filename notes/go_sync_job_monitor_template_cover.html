@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1440px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    display: flex; flex-direction: column;
+    padding: 80px 70px;
+  }
+  .badge {
+    display: inline-block; align-self: flex-start;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 8px 24px; font-size: 24px;
+    letter-spacing: 2px; margin-bottom: 40px;
+  }
+  .title { font-size: 70px; font-weight: 800; line-height: 1.25; margin-bottom: 18px; }
+  .title .highlight { color: #e94560; }
+  .subtitle { font-size: 31px; color: rgba(255,255,255,0.7); margin-bottom: 44px; }
+  .points { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+  .point {
+    display: flex; align-items: center; gap: 24px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 24px 34px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .point-num {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: linear-gradient(135deg, #e94560, #c23152);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 700; flex-shrink: 0;
+  }
+  .point-text { font-size: 34px; font-weight: 600; }
+  .point-desc { font-size: 25px; color: rgba(255,255,255,0.6); margin-top: 6px; font-weight: 400; }
+  .footer {
+    margin-top: 46px; display: flex; align-items: center;
+    justify-content: space-between; padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .source { font-size: 24px; color: rgba(255,255,255,0.5); }
+  .tag {
+    background: rgba(233,69,96,0.3); border: 1px solid rgba(233,69,96,0.5);
+    border-radius: 12px; padding: 6px 18px; font-size: 22px; color: #e94560;
+  }
+</style>
+</head>
+<body>
+  <div class="badge">GO 后端 · 工程模板</div>
+  <div class="title">批量同步 Job 的<br><span class="highlight">可复用控制模板</span></div>
+  <div class="subtitle">动态限流 · 实时进度 · 批并发 · 失败兜底</div>
+  <div class="points">
+    <div class="point">
+      <div class="point-num">1</div>
+      <div>
+        <div class="point-text">动态限流</div>
+        <div class="point-desc">令牌桶 + 后台每秒从配置中心热更新 QPS，不重启</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">2</div>
+      <div>
+        <div class="point-text">实时进度</div>
+        <div class="point-desc">atomic 两层计数 + 一条卡片秒级原地刷新，不刷屏</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">3</div>
+      <div>
+        <div class="point-text">同步流程</div>
+        <div class="point-desc">批外串行游标分页 / 批内 errgroup 并行 / 批末栅栏</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">4</div>
+      <div>
+        <div class="point-text">失败兜底</div>
+        <div class="point-desc">在线失败即跳过；离线对账 diff + 幂等重跑收敛</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">5</div>
+      <div>
+        <div class="point-text">易踩的坑</div>
+        <div class="point-desc">Wait 限派发非完成；接口隐式实现需指针接收者</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">技术笔记 · 项目实战沉淀</div>
+    <div class="tags"><span class="tag">#Golang</span></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1440px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    display: flex; flex-direction: column;
+    padding: 80px 70px;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 10px 28px; font-size: 26px;
+    letter-spacing: 3px; margin-bottom: 40px;
+    width: fit-content;
+  }
+  .title { font-size: 72px; font-weight: 800; line-height: 1.25; margin-bottom: 22px; }
+  .title .highlight { color: #e94560; }
+  .subtitle { font-size: 30px; color: rgba(255,255,255,0.7); margin-bottom: 50px; line-height: 1.5; }
+  .points { flex: 1; display: flex; flex-direction: column; gap: 22px; }
+  .point {
+    display: flex; align-items: center; gap: 26px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 28px 34px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .point-num {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: linear-gradient(135deg, #e94560, #c23152);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 700; flex-shrink: 0;
+  }
+  .point-text { font-size: 32px; font-weight: 600; line-height: 1.3; }
+  .point-desc { font-size: 24px; color: rgba(255,255,255,0.6); margin-top: 6px; font-weight: 400; line-height: 1.4; }
+  .footer {
+    margin-top: 40px; display: flex; align-items: center;
+    justify-content: space-between; padding-top: 26px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .source { font-size: 22px; color: rgba(255,255,255,0.5); }
+  .tags { display: flex; gap: 10px; }
+  .tag {
+    background: rgba(233,69,96,0.3); border: 1px solid rgba(233,69,96,0.5);
+    border-radius: 12px; padding: 6px 18px; font-size: 22px; color: #e94560;
+  }
+</style>
+</head>
+<body>
+  <div class="badge">AI CODING · 工程实践</div>
+  <div class="title">Harness Engineering<br><span class="highlight">从写代码到搭环境</span></div>
+  <div class="subtitle">13000 行工程配置 → 380 行 YML<br>2–3 周的活，AI 两天搞完</div>
+  <div class="points">
+    <div class="point">
+      <div class="point-num">1</div>
+      <div>
+        <div class="point-text">四根支柱</div>
+        <div class="point-desc">环境可读性 · 约束编码化 · 反馈回路 · 熵管理</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">2</div>
+      <div>
+        <div class="point-text">Agent = Model + Harness</div>
+        <div class="point-desc">工具级 / 项目级 / 需求级，三层分工</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">3</div>
+      <div>
+        <div class="point-text">验证闭环是前提</div>
+        <div class="point-desc">结果可客观判定 + 验证可自动化 + 迭代代价低</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">4</div>
+      <div>
+        <div class="point-text">AI 首版只到 80%</div>
+        <div class="point-desc">剩下 20% 不是让人兜底，是让 AI 自己跑闭环补齐</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">5</div>
+      <div>
+        <div class="point-text">Code Review 前移</div>
+        <div class="point-desc">从审代码 → 审"验证覆盖够不够"</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">大型 iOS 工程配置化实战</div>
+    <div class="tags"><span class="tag">#AI Coding</span><span class="tag">#Harness</span></div>
+  </div>
+</body>
+</html>

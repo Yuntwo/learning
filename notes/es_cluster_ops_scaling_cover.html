@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1440px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    display: flex; flex-direction: column;
+    padding: 80px 70px;
+  }
+  .badge {
+    display: inline-block; align-self: flex-start;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 8px 24px; font-size: 24px;
+    letter-spacing: 2px; margin-bottom: 40px;
+  }
+  .title { font-size: 70px; font-weight: 800; line-height: 1.3; margin-bottom: 18px; }
+  .title .highlight { color: #e94560; }
+  .subtitle { font-size: 30px; color: rgba(255,255,255,0.7); margin-bottom: 50px; }
+  .points { flex: 1; display: flex; flex-direction: column; gap: 22px; }
+  .point {
+    display: flex; align-items: center; gap: 24px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 26px 34px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .point-num {
+    width: 54px; height: 54px; border-radius: 14px;
+    background: linear-gradient(135deg, #e94560, #c23152);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 700; flex-shrink: 0;
+  }
+  .point-text { font-size: 33px; font-weight: 600; }
+  .point-desc { font-size: 25px; color: rgba(255,255,255,0.6); margin-top: 4px; font-weight: 400; }
+  .footer {
+    margin-top: 40px; display: flex; align-items: center;
+    justify-content: space-between; padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .source { font-size: 24px; color: rgba(255,255,255,0.5); }
+  .tag {
+    background: rgba(233,69,96,0.3); border: 1px solid rgba(233,69,96,0.5);
+    border-radius: 12px; padding: 6px 18px; font-size: 22px; color: #e94560;
+  }
+</style>
+</head>
+<body>
+  <div class="badge">Elasticsearch · 运维</div>
+  <div class="title">ES 磁盘告警<br><span class="highlight">别急着扩容</span></div>
+  <div class="subtitle">卷是统计单位 · shard 是数据单位 · index 是治理单位</div>
+  <div class="points">
+    <div class="point">
+      <div class="point-num">1</div>
+      <div>
+        <div class="point-text">三层映射拎清楚</div>
+        <div class="point-desc">索引 → 分片 → 数据节点 → 逻辑卷(磁盘)</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">2</div>
+      <div>
+        <div class="point-text">倾斜 ≠ 容量不足</div>
+        <div class="point-desc">有的节点 85%、有的才 13% = 分片倾斜</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">3</div>
+      <div>
+        <div class="point-text">三道水位线</div>
+        <div class="point-desc">85% 停分配 / 90% 往外迁 / 95% 转只读</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">4</div>
+      <div>
+        <div class="point-text">扩容怎么选</div>
+        <div class="point-desc">加节点补算力+磁盘 / 扩 PVC 最快只补盘</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">5</div>
+      <div>
+        <div class="point-text">止血神器</div>
+        <div class="point-desc">临时降副本释放一半空间,主分片数得 reindex</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">技术笔记 · 线上排查实践</div>
+    <div class="tags"><span class="tag">#Elasticsearch</span></div>
+  </div>
+</body>
+</html>

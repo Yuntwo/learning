@@ -1,1 +1,4 @@
 /framework/gorm/.env
+
+# transient login/debug artifacts
+notes/xiaohongshu_login_qr*.png
