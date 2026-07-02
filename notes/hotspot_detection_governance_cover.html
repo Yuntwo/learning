@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1440px;
+    background: radial-gradient(circle at top left, #243b55 0%, #141e30 45%, #0b1020 100%);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    display: flex; flex-direction: column;
+    padding: 78px 72px;
+  }
+  .badge {
+    display: inline-block;
+    align-self: flex-start;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.24);
+    border-radius: 999px;
+    padding: 10px 26px;
+    font-size: 24px;
+    letter-spacing: 2px;
+    margin-bottom: 38px;
+  }
+  .title {
+    font-size: 78px;
+    font-weight: 800;
+    line-height: 1.18;
+    margin-bottom: 18px;
+  }
+  .title .highlight { color: #64d2ff; }
+  .subtitle {
+    font-size: 32px;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 56px;
+  }
+  .points {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1;
+  }
+  .point {
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+    padding: 28px 32px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.09);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.16);
+  }
+  .point-num {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #64d2ff, #3a7bd5);
+    color: #08111f;
+    font-size: 28px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .point-text {
+    font-size: 35px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .point-desc {
+    margin-top: 8px;
+    font-size: 24px;
+    color: rgba(255,255,255,0.62);
+    line-height: 1.5;
+  }
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 42px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.14);
+  }
+  .source {
+    font-size: 24px;
+    color: rgba(255,255,255,0.5);
+  }
+  .tag {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 12px;
+    background: rgba(100,210,255,0.14);
+    border: 1px solid rgba(100,210,255,0.35);
+    color: #64d2ff;
+    font-size: 22px;
+  }
+</style>
+</head>
+<body>
+  <div class="badge">后端 · 缓存治理</div>
+  <div class="title">热点治理<br><span class="highlight">不只是加缓存</span></div>
+  <div class="subtitle">从 TopK 检测到本地缓存准入</div>
+
+  <div class="points">
+    <div class="point">
+      <div class="point-num">1</div>
+      <div>
+        <div class="point-text">热点检测先于缓存</div>
+        <div class="point-desc">先找出真正热点 key，再决定哪些数据值得进本地缓存。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="point-num">2</div>
+      <div>
+        <div class="point-text">HeavyKeeper 更适合</div>
+        <div class="point-desc">同等内存开销下，热点识别精度通常优于常见近似方案。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="point-num">3</div>
+      <div>
+        <div class="point-text">统一衰减抓突发</div>
+        <div class="point-desc">别让历史累计值压制新热点，系统要对“最近热度”更敏感。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="point-num">4</div>
+      <div>
+        <div class="point-text">热点准入 + 白名单</div>
+        <div class="point-desc">兼顾未知热点与已知活动热点，让本地缓存更省内存、更高命中。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="source">技术笔记沉淀</div>
+    <div><span class="tag">#缓存</span></div>
+  </div>
+</body>
+</html>

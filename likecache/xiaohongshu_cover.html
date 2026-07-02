@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>点赞缓存封面</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1080px;
+      height: 1440px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top left, rgba(79, 70, 229, 0.35), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.30), transparent 28%),
+        linear-gradient(135deg, #0b1020 0%, #121a31 48%, #1c2a4e 100%);
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    .page {
+      width: 100%;
+      height: 100%;
+      padding: 72px 64px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.65));
+      pointer-events: none;
+    }
+    .badge {
+      align-self: flex-start;
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.08);
+      color: #dbe7ff;
+      font-size: 24px;
+      letter-spacing: 1px;
+      backdrop-filter: blur(8px);
+      margin-bottom: 34px;
+    }
+    .title {
+      font-size: 76px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin-bottom: 18px;
+      max-width: 900px;
+    }
+    .title .highlight {
+      color: #7dd3fc;
+    }
+    .subtitle {
+      color: rgba(255,255,255,0.78);
+      font-size: 31px;
+      line-height: 1.5;
+      max-width: 860px;
+      margin-bottom: 54px;
+    }
+    .panel {
+      border-radius: 32px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 28px 80px rgba(0,0,0,0.25);
+      backdrop-filter: blur(14px);
+      padding: 30px 30px 18px;
+    }
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-bottom: 30px;
+    }
+    .card {
+      border-radius: 24px;
+      padding: 28px 26px 24px;
+      min-height: 250px;
+      background: rgba(9, 14, 28, 0.52);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .card.left {
+      box-shadow: inset 0 0 0 1px rgba(248,113,113,0.08);
+    }
+    .card.right {
+      box-shadow: inset 0 0 0 1px rgba(56,189,248,0.10);
+    }
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 112px;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 14px;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .left .card-tag {
+      background: rgba(248,113,113,0.16);
+      color: #fda4af;
+    }
+    .right .card-tag {
+      background: rgba(56,189,248,0.16);
+      color: #93c5fd;
+    }
+    .card-title {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .card-desc {
+      font-size: 25px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.55;
+    }
+    .points {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 8px;
+    }
+    .point {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      border-radius: 22px;
+      padding: 22px 20px;
+      background: rgba(8, 13, 25, 0.52);
+      border: 1px solid rgba(255,255,255,0.10);
+      min-height: 138px;
+    }
+    .num {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      flex: 0 0 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      color: #fff;
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 3px;
+    }
+    .point-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .point-desc {
+      font-size: 22px;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.70);
+    }
+    .footer {
+      margin-top: auto;
+      padding-top: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-left {
+      color: rgba(255,255,255,0.48);
+      font-size: 24px;
+    }
+    .footer-right {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .tag {
+      border-radius: 999px;
+      padding: 10px 18px;
+      background: rgba(125,211,252,0.14);
+      border: 1px solid rgba(125,211,252,0.22);
+      color: #bae6fd;
+      font-size: 22px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="grid"></div>
+    <div class="badge">Redis · 系统设计 · 信息流</div>
+
+    <div class="title">
+      点赞缓存<br />
+      为什么要从 <span class="highlight">Set</span> 改成 <span class="highlight">Hash</span>
+    </div>
+
+    <div class="subtitle">
+      Feed 场景下，真正重要的不是命令技巧，<br />而是缓存维度有没有对齐真实查询路径。
+    </div>
+
+    <div class="panel">
+      <div class="compare">
+        <div class="card left">
+          <div class="card-tag">旧方案</div>
+          <div class="card-title">内容维度 Set</div>
+          <div class="card-desc">
+            每篇内容都维护一个点赞集合。<br />
+            用户刷一次 Feed，要按内容逐个判断状态。
+          </div>
+        </div>
+        <div class="card right">
+          <div class="card-tag">新方案</div>
+          <div class="card-title">用户维度 Hash</div>
+          <div class="card-desc">
+            一个用户最近点赞过的内容集中在一个 Hash。<br />
+            批量状态查询更贴近信息流访问模式。
+          </div>
+        </div>
+      </div>
+
+      <div class="points">
+        <div class="point">
+          <div class="num">1</div>
+          <div>
+            <div class="point-title">热点内容容易变大 Key</div>
+            <div class="point-desc">按内容存全量点赞用户，热点越高，集合越重。</div>
+          </div>
+        </div>
+        <div class="point">
+          <div class="num">2</div>
+          <div>
+            <div class="point-title">Feed 会把读路径放大</div>
+            <div class="point-desc">一刷就是多篇内容，单篇逐查会让 Redis 请求数快速膨胀。</div>
+          </div>
+        </div>
+        <div class="point">
+          <div class="num">3</div>
+          <div>
+            <div class="point-title">状态和计数要拆开</div>
+            <div class="point-desc">是否点赞与点赞总数不是同一类数据，分开维护更清晰。</div>
+          </div>
+        </div>
+        <div class="point">
+          <div class="num">4</div>
+          <div>
+            <div class="point-title">冷热边界更重要</div>
+            <div class="point-desc">老内容不应长期占据高价值缓存，热数据要更聚焦。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-left">learning / likecache</div>
+      <div class="footer-right">
+        <div class="tag">#Redis</div>
+        <div class="tag">#系统设计</div>
+        <div class="tag">#后端开发</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

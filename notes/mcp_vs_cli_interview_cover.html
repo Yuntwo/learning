@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1080, initial-scale=1.0" />
+<title>MCP vs CLI Cover</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    width: 1080px;
+    height: 1440px;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #f8fbff;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(83, 196, 255, 0.22), transparent 28%),
+      radial-gradient(circle at 85% 18%, rgba(56, 189, 248, 0.16), transparent 22%),
+      linear-gradient(160deg, #0a1020 0%, #111a34 48%, #0d1740 100%);
+  }
+  .canvas {
+    position: relative;
+    width: 1080px;
+    height: 1440px;
+    padding: 76px 72px 60px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.18);
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.92);
+  }
+  .title {
+    margin-top: 34px;
+    font-size: 74px;
+    line-height: 1.16;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  .accent { color: #79e5ff; }
+  .subtitle {
+    margin-top: 20px;
+    width: 860px;
+    font-size: 28px;
+    line-height: 1.55;
+    color: rgba(235,244,255,0.72);
+  }
+  .cards {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .card {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 22px;
+    padding: 26px 28px;
+    min-height: 152px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 26px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+    backdrop-filter: blur(8px);
+  }
+  .num {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #34d399, #10b981);
+    color: #062233;
+    font-size: 30px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .card-title {
+    font-size: 34px;
+    font-weight: 760;
+    line-height: 1.28;
+    color: #ffffff;
+  }
+  .card-desc {
+    margin-top: 10px;
+    font-size: 24px;
+    line-height: 1.52;
+    color: rgba(232,241,255,0.70);
+  }
+  .footer {
+    position: absolute;
+    left: 72px;
+    right: 72px;
+    bottom: 56px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .source {
+    font-size: 22px;
+    color: rgba(220,232,248,0.48);
+  }
+  .tags {
+    display: flex;
+    gap: 10px;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: rgba(121,229,255,0.12);
+    border: 1px solid rgba(121,229,255,0.26);
+    color: #90ebff;
+    font-size: 20px;
+  }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="badge">AI 工程面试答题</div>
+
+    <div class="title">
+      <span class="accent">MCP</span> 和 <span class="accent">CLI</span><br />
+      到底差在哪？
+    </div>
+
+    <div class="subtitle">
+      别只背定义，重点讲清对象、层次、工程价值和典型使用场景。
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="num">1</div>
+        <div>
+          <div class="card-title">CLI 面向人或脚本</div>
+          <div class="card-desc">通过命令、参数和文本输出操作工具，适合手动调试和脚本自动化。</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">2</div>
+        <div>
+          <div class="card-title">MCP 面向模型或 Agent</div>
+          <div class="card-desc">通过结构化参数和返回结果，让模型稳定调用外部能力。</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">3</div>
+        <div>
+          <div class="card-title">两者不是替代关系</div>
+          <div class="card-desc">常见做法是把已有 CLI 或 SDK 再封装成模型可调用的工具能力。</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="num">4</div>
+        <div>
+          <div class="card-title">面试加分点</div>
+          <div class="card-desc">重点讲“人怎么用工具”和“模型怎么结构化用工具”的差别，而不只是概念定义。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="source">技术学习笔记 · 面试表达整理</div>
+      <div class="tags">
+        <span class="tag">#MCP</span>
+        <span class="tag">#CLI</span>
+        <span class="tag">#Agent</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

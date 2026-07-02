@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1440px;
+    background: radial-gradient(circle at top right, rgba(233,69,96,0.22), transparent 28%),
+                linear-gradient(135deg, #0f172a 0%, #111827 45%, #1e293b 100%);
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    display: flex; flex-direction: column;
+    padding: 84px 72px;
+  }
+  .badge {
+    display: inline-block;
+    width: fit-content;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px;
+    padding: 10px 24px;
+    font-size: 24px;
+    letter-spacing: 2px;
+    margin-bottom: 42px;
+  }
+  .title {
+    font-size: 76px;
+    font-weight: 800;
+    line-height: 1.22;
+    margin-bottom: 20px;
+  }
+  .title .highlight { color: #fb7185; }
+  .subtitle {
+    font-size: 31px;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 56px;
+  }
+  .points {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .point {
+    display: flex;
+    align-items: flex-start;
+    gap: 22px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 28px 30px;
+    backdrop-filter: blur(8px);
+  }
+  .point-num {
+    width: 54px; height: 54px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .point-text {
+    font-size: 35px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .point-desc {
+    font-size: 25px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.64);
+    margin-top: 6px;
+  }
+  .footer {
+    margin-top: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.14);
+  }
+  .source { font-size: 24px; color: rgba(255,255,255,0.48); }
+  .tag {
+    background: rgba(251,113,133,0.16);
+    border: 1px solid rgba(251,113,133,0.42);
+    border-radius: 12px;
+    padding: 8px 18px;
+    font-size: 22px;
+    color: #fb7185;
+  }
+</style>
+</head>
+<body>
+  <div class="badge">系统设计</div>
+  <div class="title"><span class="highlight">千亿级</span>点赞系统<br>怎么扛住热点？</div>
+  <div class="subtitle">三层存储 + 异步写链路 + 多机房容灾</div>
+  <div class="points">
+    <div class="point">
+      <div class="point-num">1</div>
+      <div>
+        <div class="point-text">记录与计数拆分</div>
+        <div class="point-desc">状态、计数、列表分开建模，查询路径和写路径更清晰。</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">2</div>
+      <div>
+        <div class="point-text">TiDB + Redis + LocalCache</div>
+        <div class="point-desc">持久化、热点读写、超热点兜底分别交给不同层处理。</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">3</div>
+      <div>
+        <div class="point-text">异步化 + 聚合写</div>
+        <div class="point-desc">把高频计数更新合并写入，降低数据库 I/O 压力。</div>
+      </div>
+    </div>
+    <div class="point">
+      <div class="point-num">4</div>
+      <div>
+        <div class="point-text">多机房、多存储兜底</div>
+        <div class="point-desc">故障时先保用户交互，再通过补偿与对账修正数据。</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="source">学习笔记沉淀</div>
+    <div class="tags"><span class="tag">#架构设计</span></div>
+  </div>
+</body>
+</html>
