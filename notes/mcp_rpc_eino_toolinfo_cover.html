@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>MCP vs RPC</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1440px;
+    background: linear-gradient(135deg, #0b1020 0%, #111a33 45%, #1a2452 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    display: flex; flex-direction: column;
+    padding: 84px 72px;
+  }
+  .badge {
+    display: inline-block;
+    align-self: flex-start;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px;
+    padding: 10px 24px;
+    font-size: 24px;
+    letter-spacing: 2px;
+    margin-bottom: 38px;
+  }
+  .title {
+    font-size: 76px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
+  .title .highlight { color: #7cc6ff; }
+  .subtitle {
+    font-size: 30px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 56px;
+  }
+  .points {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1;
+  }
+  .point {
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+    padding: 28px 30px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 22px;
+    backdrop-filter: blur(8px);
+  }
+  .point-num {
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #49a6ff, #6e7dff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 800;
+  }
+  .point-text {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .point-desc {
+    margin-top: 8px;
+    font-size: 24px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.62);
+  }
+  .footer {
+    margin-top: 42px;
+    padding-top: 26px;
+    border-top: 1px solid rgba(255,255,255,0.14);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .source {
+    font-size: 24px;
+    color: rgba(255,255,255,0.5);
+  }
+  .tags {
+    display: flex;
+    gap: 12px;
+  }
+  .tag {
+    background: rgba(124,198,255,0.16);
+    color: #7cc6ff;
+    border: 1px solid rgba(124,198,255,0.34);
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: 22px;
+  }
+</style>
+</head>
+<body>
+  <div class="badge">协议理解</div>
+  <div class="title"><span class="highlight">MCP</span> 和 <span class="highlight">RPC</span><br>到底差在哪？</div>
+  <div class="subtitle">一句话先记住：MCP 不是普通 RPC 的别名，而是面向模型能力调用的标准协议。</div>
+
+  <div class="points">
+    <div class="point">
+      <div class="point-num">1</div>
+      <div>
+        <div class="point-text">两者底层都像远程调用</div>
+        <div class="point-desc">都有 client / server、method、params、result，本质都在解决“怎么调远端能力”。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="point-num">2</div>
+      <div>
+        <div class="point-text">RPC 面向程序，MCP 面向模型</div>
+        <div class="point-desc">RPC 关注函数调用；MCP 关注模型如何发现、理解并调用外部能力。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="point-num">3</div>
+      <div>
+        <div class="point-text">MCP 多了一层能力语义</div>
+        <div class="point-desc">它标准化了 tool、resource、prompt、schema，不只是“发请求拿结果”。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="point-num">4</div>
+      <div>
+        <div class="point-text">更像 AI 世界里的 LSP</div>
+        <div class="point-desc">不是发明新通信原理，而是在 RPC 风格交互上，定义模型可用的统一能力接口。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="source">学习笔记沉淀</div>
+    <div class="tags">
+      <span class="tag">#MCP</span>
+      <span class="tag">#RPC</span>
+    </div>
+  </div>
+</body>
+</html>
