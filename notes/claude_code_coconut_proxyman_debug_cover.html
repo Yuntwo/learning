@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1440px;
+    background: radial-gradient(circle at top left, #243b55 0%, #141e30 42%, #0c1020 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    display: flex; flex-direction: column;
+    padding: 82px 70px;
+  }
+  .badge {
+    display: inline-block;
+    align-self: flex-start;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px;
+    padding: 10px 24px;
+    font-size: 24px;
+    letter-spacing: 1px;
+    margin-bottom: 38px;
+  }
+  .title {
+    font-size: 70px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
+  .title .highlight { color: #67e8f9; }
+  .subtitle {
+    font-size: 31px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.5;
+    margin-bottom: 56px;
+  }
+  .diagram {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 28px;
+    padding: 28px 30px;
+    margin-bottom: 38px;
+  }
+  .diagram-title {
+    font-size: 24px;
+    color: #93c5fd;
+    margin-bottom: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .flow {
+    font-size: 34px;
+    line-height: 1.7;
+    font-weight: 700;
+  }
+  .flow small {
+    display: block;
+    color: rgba(255,255,255,0.65);
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: 12px;
+  }
+  .points {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .point {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 22px;
+    padding: 26px 28px;
+  }
+  .num {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #22d3ee, #2563eb);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .point-title {
+    font-size: 33px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .point-desc {
+    font-size: 25px;
+    line-height: 1.45;
+    color: rgba(255,255,255,0.66);
+  }
+  .footer {
+    margin-top: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.14);
+    padding-top: 26px;
+  }
+  .source {
+    font-size: 22px;
+    color: rgba(255,255,255,0.48);
+  }
+  .tag {
+    display: inline-block;
+    border-radius: 12px;
+    padding: 8px 16px;
+    border: 1px solid rgba(103,232,249,0.35);
+    background: rgba(103,232,249,0.12);
+    color: #67e8f9;
+    font-size: 22px;
+    margin-left: 12px;
+  }
+</style>
+</head>
+<body>
+  <div class="badge">AI 工程调试</div>
+  <div class="title">本地模型代理 + <span class="highlight">抓包观测</span></div>
+  <div class="subtitle">把 Claude Code 的模型调用链路看清楚：转发与抓包分层配置，不再混淆端口职责。</div>
+
+  <div class="diagram">
+    <div class="diagram-title">推荐链路</div>
+    <div class="flow">Claude Code → 抓包代理 :9090 → 本地模型代理 :8787 → 目标模型服务
+      <small>抓包端口负责观察，请求转发端口负责处理，不需要改成同一个端口。</small>
+    </div>
+  </div>
+
+  <div class="points">
+    <div class="point">
+      <div class="num">1</div>
+      <div>
+        <div class="point-title">先过抓包，再进模型代理</div>
+        <div class="point-desc">只要流量顺序正确，就能同时保留本地兼容入口和完整请求观测能力。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="num">2</div>
+      <div>
+        <div class="point-title">别把 127.0.0.1 放进 NO_PROXY</div>
+        <div class="point-desc">否则本地 8787 会直接绕过抓包代理，表现为调用成功但抓不到任何包。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="num">3</div>
+      <div>
+        <div class="point-title">HTTPS 证书要一起处理</div>
+        <div class="point-desc">想看明文请求与响应，除了配代理，还要信任证书，必要时补 NODE_EXTRA_CA_CERTS。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="num">4</div>
+      <div>
+        <div class="point-title">调试大模型链路特别高效</div>
+        <div class="point-desc">适合定位请求是否发出、是否命中本地代理，以及输入输出与报错细节。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="source">来源：本地开发调试实践</div>
+    <div>
+      <span class="tag">#ClaudeCode</span>
+      <span class="tag">#代理调试</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+[小红书标题]
+A2A协议到底是什么
+
+[小红书正文]
+最近我把 A2A（Agent-to-Agent）协议重新梳理了一遍，最大的收获其实不是它有多“新”，而是终于把一个容易混的点想清楚了：
+
+A2A 不是在替代 HTTP。
+它更像是构建在 HTTP 之上的一套 Agent 通信规范。
+
+所以很多人第一次看到这样的请求：
+
+"method": "message/send"
+
+会下意识以为这是 URL path。
+但其实不是。
+
+这里通常是两层：
+第一层是 HTTP 请求打到某个统一入口。
+第二层是 JSON-RPC 的 method 决定要执行哪个 Agent 动作。
+
+这也是我觉得理解 A2A 最重要的一步：
+它不是一种新的传输层协议，而是一种“Agent 之间如何互相协作”的应用层约定。
+
+为什么这件事值得搞懂？
+因为普通的大模型接口更像一次问答，而 A2A 更像一次任务协作。
+
+它通常会把这些东西变成协议里的正式对象：
+- Agent Card：这个 Agent 是谁，会什么
+- Message：这次发过去的消息
+- Task：这个任务现在处于什么状态
+- Artifact：任务产生了什么结果物
+
+也就是说，A2A 关心的不只是“给我一段回复”，而是：
+- 怎么发现另一个 Agent
+- 怎么发起任务
+- 怎么流式拿进度
+- 怎么查询任务
+- 怎么取消任务
+- 断开之后怎么继续订阅
+
+如果用一句话概括：
+普通接口更像调用函数，A2A 更像协作执行任务。
+
+我自己最后会拿这张对照表来记：
+
+对比项            普通 REST / HTTP         A2A
+底层传输          HTTP                     HTTP(S)
+动作表达          path + verb              JSON-RPC method
+能力发现          文档或私有约定           Agent Card
+结果拿法          一次响应                 响应 + 流式 + 查询 + 重订阅
+核心语义          请求/响应                任务生命周期
+
+再看一个最小例子就更直观了。
+
+一个 A2A 请求经常会长这样：
+- HTTP 上发 POST
+- body 里带 jsonrpc = 2.0
+- method = message/send
+- params.message 里放 role 和 parts
+
+也就是说，真正的“路由动作”在 JSON 里，不一定在 URL 上。
+
+这也是为什么 A2A 很适合多 Agent 系统。
+当系统里有 planner、executor、检索 agent、工具 agent 时，你不想给每个能力都临时拍一个私有 HTTP 协议。
+你更希望它们都按统一任务语义协作。
+
+我这次顺手还看了一个基于 Go 的 demo，结构非常清楚：
+- 先把 A2A handler 挂到现有 HTTP server 上
+- 暴露 agent card
+- 实现 message/send
+- 如果支持流式，再加 message/stream 和 tasks/resubscribe
+
+这个 demo 特别能说明一点：
+A2A 定义的是“怎么被调用”，不是“内部必须怎么实现”。
+
+内部你可以是：
+- ReAct agent
+- graph
+- workflow
+- 普通业务逻辑
+
+只要对外遵守 A2A 的消息与任务约定，就能作为一个 A2A agent 被别的系统调用。
+
+所以如果你最近在做 Agent 平台、Agent 网关、多 Agent 协作，我非常建议先把 A2A 想清楚。
+
+如果只记住一句话，那就是：
+A2A 不是 Agent 时代的 TCP，而更像 Agent 时代跑在 HTTP 之上的任务协作协议。
+
+[小红书标签]
+#A2A #Agent开发 #多智能体 #AI工程化 #协议设计 #JSONRPC #系统设计 #Go开发

@@ -1,0 +1,49 @@
+[X 文案]
+Claude Code 并不是把“用户一句话”直接发给模型，而是先把系统规则、环境信息、工具 schema、skills、system reminders 一起编排成一次完整的 Messages 请求。
+
+看了一次真实抓包后，我对几个概念彻底分清了：
+prompt 不是单一字段，而是分散在 system、messages、tools description 等位置的指令集合；
+messages 是显式对话结构；
+context 是模型本轮实际可见的全部信息；
+真正进模型的输入，则是这些内容被服务端进一步序列化和 tokenization 后的 token 流。
+
+最有意思的是：用户真正输入可能只有几个词，但 input tokens 却有几万，大头都来自框架注入的上下文和工具说明。
+
+如果你在做 agent、MCP、工具调用或流式接口，这种抓包分析特别值得做一次。
+
+#ClaudeCode #Anthropic #AIAgent #LLMEngineering
+
+[小红书标题]
+一次抓包看懂 Claude Code 怎么喂模型
+
+[小红书正文]
+最近看了一次 Claude Code 的真实请求抓包，终于把几个经常混着说的概念理顺了：prompt、messages、context，还有模型真正吃进去的输入，到底分别是什么。
+
+最直观的结论是：Claude Code 发给模型的，根本不是“用户的一句话”。
+
+它实际会把很多东西一起打包进去：系统规则、运行环境、当前目录、工具 schema、动态能力说明、system reminders，再加上你的输入，最后组成一次完整的 Messages 请求。
+
+这次抓包最让我震撼的一点是：用户真正输入可能只有一个很短的词，但整次请求的 input tokens 却有 3 万多。
+
+也就是说，在 agent 产品里，用户输入往往只是很小一部分，真正占大头的是框架注入的运行时上下文。
+
+我现在会这样理解这几个概念：
+prompt 是一组分散在多个字段里的指令内容，不是一个单独文本框；
+messages 是显式对话结构；
+context 是模型本轮能看到的全部信息；
+而实际模型输入，是这些内容在服务端进一步拼接、规范化、分词之后形成的 token 流。
+
+还有一个很容易忽略的点：tools 也不仅仅是 schema。
+
+每个工具的 description，其实也在给模型下指令，告诉它什么时候该用、什么时候别用、参数怎么填。所以 tools 本身也是 prompt 的一部分。
+
+另外，流式输出也不是“模型天然就这样返回”，而是 runtime 把内部消息重新封装成 SSE 事件流。真实消费时要按 event 去累计，不能只盯着第一段返回。
+
+如果你在做 agent、MCP、工具调用、流式接口或者 prompt caching，这类抓包真的建议至少做一次。很多抽象概念，一看到真实请求结构就全明白了。
+
+[小红书标签]
+#ClaudeCode
+#AIAgent
+#大模型
+#PromptEngineering
+#工程化

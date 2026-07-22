@@ -1,0 +1,99 @@
+[小红书标题]
+Claude Code 的 WebSearch 到底是谁在输出？
+
+[小红书正文]
+最近看了一次 Claude Code 的真实交互，我把一个很容易混淆的问题彻底理顺了：
+
+为什么你在代理抓到的大模型 SSE 里，只看到 `tool_use`、`input_json_delta` 这种协议事件；
+但在 Claude Code 终端里，却能看到 `Web Search("...")`、`Did 1 search in 1s` 这种很像“模型正在说话”的内容？
+
+先说结论：
+
+`Web Search("...")` 不是模型原样流式输出的文本。
+
+它更准确地说，是 Claude Code 本地 CLI / harness 根据模型发出来的 `tool_use(WebSearch)` 事件，做的一层可读化渲染。
+
+也就是说，这里面至少有两层：
+
+第一层，是模型协议层。
+模型在 SSE 里返回的是：
+- 我要调用哪个工具
+- 工具名字是什么
+- 工具参数 JSON 是什么
+- 这些 JSON 参数还可能是分段流式吐出来的
+
+所以你抓包里看到的常常是这种结构：
+- `content_block_start`
+- `type = tool_use`
+- `name = WebSearch`
+- 后面跟一串 `input_json_delta`
+
+这代表的是：模型决定要调工具了。
+
+第二层，是 Claude Code 本地运行时。
+它会把这些分段 JSON 参数拼起来，然后真正去执行 WebSearch 工具。
+
+与此同时，CLI 会把这个底层工具调用 prettify 成更适合人看的终端日志，比如：
+
+`Web Search("LangSmith ...")`
+
+甚至再补一条执行反馈：
+
+`Did 1 search in 1s`
+
+这两句看起来很像“模型流式输出的人话”，但其实都不是协议原文。
+它们是本地 UI 层追加出来的。
+
+这里最关键的一点是：
+
+模型在发出 `tool_use` 的那个瞬间，其实并不知道最后会“用了 1 次 search，耗时 1s”。
+
+因为这些信息只有工具执行完成后，本地 harness 才知道。
+所以 `Did 1 search in 1s` 这种内容，天然不可能存在于模型最初的 SSE token 流里。
+
+如果把整个链路顺一下，会更清楚：
+
+1. 用户提问
+2. Claude Code 发请求给模型
+3. 模型流式返回 `tool_use(WebSearch)` 和参数 JSON
+4. Claude Code 本地拼出完整参数
+5. Claude Code 真正执行 WebSearch
+6. 终端渲染成 `Web Search("...")` / `Did 1 search in 1s`
+7. 工具结果再回注给模型
+8. 模型继续生成最终答案
+
+所以这件事本质上不是“模型边想边把日志打印给你看”，而是：
+
+模型负责决策，Claude Code 负责执行；
+SSE 负责传协议，CLI 负责把协议翻译成可读界面。
+
+如果你也在抓 agent 的包，我觉得有个很实用的判断方法：
+
+如果一段内容长得像协议字段：
+- `content_block_start`
+- `tool_use`
+- `input_json_delta`
+- `partial_json`
+
+那它大概率属于模型 / API 协议层。
+
+如果一段内容长得像操作日志：
+- `Web Search("...")`
+- `Read(file.ts:12-30)`
+- `Bash(git status)`
+- `Did 1 search in 1s`
+
+那它大概率属于 CLI 本地 UI 渲染层。
+
+如果只记住一句话，我会把它说成：
+
+Claude Code 终端里的 Web Search 日志，不是模型原样输出，而是 runtime 对 `tool_use` 事件做的可视化翻译。
+
+[小红书标签]
+#ClaudeCode
+#AIAgent
+#大模型
+#PromptEngineering
+#工程化
+#流式输出
+#工具调用

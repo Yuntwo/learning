@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthropic vs OpenAI 协议对比图</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1080px;
+      min-height: 1440px;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(103, 80, 164, 0.32), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(46, 125, 246, 0.28), transparent 36%),
+        linear-gradient(180deg, #0b1020 0%, #121a2f 45%, #0d1426 100%);
+      color: #eef2ff;
+      padding: 56px 52px;
+    }
+    .page {
+      width: 100%;
+      min-height: 1328px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 36px;
+      background: rgba(11, 16, 32, 0.72);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      backdrop-filter: blur(10px);
+      padding: 48px 42px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #dbe7ff;
+      background: rgba(103, 80, 164, 0.22);
+      border: 1px solid rgba(174, 147, 255, 0.28);
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 56px;
+      line-height: 1.16;
+      font-weight: 900;
+      margin-bottom: 14px;
+      letter-spacing: -0.8px;
+    }
+    .highlight { color: #8ab4ff; }
+    .subtitle {
+      font-size: 25px;
+      line-height: 1.6;
+      color: rgba(238, 242, 255, 0.78);
+      margin-bottom: 32px;
+      max-width: 920px;
+    }
+    .table-wrap {
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      margin-bottom: 28px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 20px;
+      line-height: 1.45;
+    }
+    thead th {
+      background: linear-gradient(180deg, rgba(138,180,255,0.22), rgba(138,180,255,0.10));
+      color: #f8fbff;
+      text-align: left;
+      font-size: 19px;
+      font-weight: 800;
+      padding: 18px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    tbody td {
+      padding: 16px;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: rgba(238, 242, 255, 0.94);
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:nth-child(odd) td { background: rgba(255,255,255,0.018); }
+    .col-key { width: 18%; color: #cbd9ff; font-weight: 700; }
+    .col-a { width: 31%; }
+    .col-b { width: 31%; }
+    .col-note { width: 20%; color: rgba(238,242,255,0.72); }
+    .tips {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 20px 22px;
+    }
+    .card h2 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+    .card p, .card li {
+      font-size: 18px;
+      line-height: 1.6;
+      color: rgba(238,242,255,0.80);
+    }
+    .card ul {
+      padding-left: 22px;
+    }
+    .footer {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      color: rgba(238,242,255,0.60);
+      font-size: 18px;
+    }
+    .tag {
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: rgba(76, 175, 255, 0.14);
+      border: 1px solid rgba(76, 175, 255, 0.20);
+      color: #8fd0ff;
+      font-size: 17px;
+      font-weight: 700;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.9em;
+      color: #a9d1ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="badge">协议对比速查</div>
+    <h1><span class="highlight">Anthropic Messages</span> vs <span class="highlight">OpenAI</span></h1>
+    <div class="subtitle">
+      两者都在解决大模型对话、工具调用和流式输出，但 path、system 位置、tool 编排和 streaming 事件模型都不一样。
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-key">对比项</th>
+            <th class="col-a">Anthropic Messages</th>
+            <th class="col-b">OpenAI Chat / Responses</th>
+            <th class="col-note">速记</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-key">常见 path</td>
+            <td class="col-a"><code>/v1/messages</code></td>
+            <td class="col-b"><code>/v1/chat/completions</code><br><code>/v1/responses</code></td>
+            <td class="col-note">先看 URL，常能先判断协议家族</td>
+          </tr>
+          <tr>
+            <td class="col-key">system 位置</td>
+            <td class="col-a">顶层 <code>system</code></td>
+            <td class="col-b">Chat 放 <code>messages.system</code><br>Responses 放 <code>instructions</code></td>
+            <td class="col-note">切协议时，先重组 system prompt</td>
+          </tr>
+          <tr>
+            <td class="col-key">content 结构</td>
+            <td class="col-a">更偏 block 数组</td>
+            <td class="col-b">更常见字符串、parts 或 delta</td>
+            <td class="col-note">复杂场景别只用纯字符串抽象</td>
+          </tr>
+          <tr>
+            <td class="col-key">tool 调用</td>
+            <td class="col-a"><code>tool_use</code> / <code>tool_result</code></td>
+            <td class="col-b"><code>tool_calls</code> / <code>role: tool</code></td>
+            <td class="col-note">字段不同，消息编排也不同</td>
+          </tr>
+          <tr>
+            <td class="col-key">参数形态</td>
+            <td class="col-a">结构化 <code>input</code> 对象</td>
+            <td class="col-b">常见 JSON 字符串 <code>arguments</code></td>
+            <td class="col-note">别忘了 parse 和校验 schema</td>
+          </tr>
+          <tr>
+            <td class="col-key">停止原因</td>
+            <td class="col-a"><code>stop_reason</code></td>
+            <td class="col-b"><code>finish_reason</code></td>
+            <td class="col-note">监控和日志口径要统一</td>
+          </tr>
+          <tr>
+            <td class="col-key">token 统计</td>
+            <td class="col-a"><code>input_tokens</code> / <code>output_tokens</code></td>
+            <td class="col-b"><code>prompt_tokens</code> / <code>completion_tokens</code></td>
+            <td class="col-note">计费层要做字段映射</td>
+          </tr>
+          <tr>
+            <td class="col-key">streaming 风格</td>
+            <td class="col-a">message / block 生命周期事件</td>
+            <td class="col-b">delta 增量片段或 event stream</td>
+            <td class="col-note">前端解析别写死单一供应商格式</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tips">
+      <div class="card">
+        <h2>一句话结论</h2>
+        <p>Anthropic 和 OpenAI 是同类接口，但不是同协议。做兼容，不能只改 model 或 URL。</p>
+      </div>
+      <div class="card">
+        <h2>工程建议</h2>
+        <ul>
+          <li>内部先统一抽象：systemPrompt、contentBlocks、toolCalls、usage、streamEvents。</li>
+          <li>path、消息体、streaming 三层分别做适配。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>适合大模型网关、SDK 封装、Agent 框架、多模型兼容场景</div>
+      <div class="tag">收藏这张表就够了</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+[小红书标题]
+Anthropic 和 OpenAI 协议区别
+
+[小红书正文]
+今天把 Anthropic Messages API 和 OpenAI 协议重新梳理了一遍，顺手把它们最常见的 path 也一起放进了同一个坐标系里。
+
+很多人会觉得这两套协议“差不多”：都有 model，都能多轮对话，都支持 system、tools、streaming。
+
+但真正做接入、做网关、做兼容层时就会发现，它们只是解决的是同一类问题，不是同一套协议。
+
+我觉得最值得先记住的，是 path。
+Anthropic 原生最常见的是 /v1/messages。
+OpenAI 兼容最常见的是 /v1/chat/completions。
+新一点的 OpenAI 风格还会见到 /v1/responses。
+
+这里还有一个特别容易口误的点：
+很多人会顺嘴说成 /v1/chat/completion，
+但常见兼容接口其实通常是 /v1/chat/completions，后面有个 s。
+
+然后再看正文结构。
+
+第一，system 放的位置不一样。
+Anthropic 通常把 system 放在顶层字段里。
+OpenAI Chat 常放在 messages 里的 system 消息。
+OpenAI Responses 又经常放在 instructions 里。
+所以如果你在做供应商切换，第一步通常不是换 model，而是先重组 system prompt。
+
+第二，content 的表达方式不一样。
+OpenAI 在很多简单场景里更像“字符串内容”。
+Anthropic 更强调 content block，也就是内容块。
+一旦进入多模态、工具调用、流式输出，这种差异会特别明显。
+
+第三，工具调用长得不一样。
+Anthropic 常见的是 tool_use 和 tool_result。
+OpenAI 常见的是 tool_calls 和 role: tool。
+更关键的是，Anthropic 的工具参数更常直接给结构化对象，OpenAI 很多时候给的是 JSON 字符串 arguments。
+也就是说，兼容层不能只改字段名，往往还要改消息编排和参数解析。
+
+第四，streaming 也不是同一个事件模型。
+Anthropic 更像“消息生命周期事件流”，会有 message_start、content_block_delta、message_stop 这种事件。
+OpenAI 更常见的是 delta 增量片段。
+如果你前端已经按某一家写死了解析逻辑，切另一家时很容易出问题。
+
+我自己最后总结成一张速记表：
+
+对比项            Anthropic Messages            OpenAI Chat / Responses
+常见 path         /v1/messages                  /v1/chat/completions / /v1/responses
+system 位置       顶层 system                    messages.system / instructions
+content 结构      block 数组优先                  字符串或 delta 更常见
+tool 调用         tool_use / tool_result         tool_calls / role: tool
+参数形态          结构化 input                    JSON 字符串 arguments 常见
+停止原因          stop_reason                     finish_reason
+token 统计        input/output_tokens             prompt/completion_tokens
+streaming 风格    生命周期事件流                   delta 增量流
+
+我还顺手对照看了下当前仓库里的适配器实现，外层 path 是 /api/v3/bots/chat/completions，返回对象里也有 chat.completion.chunk，这种就明显更像 OpenAI Chat Completions 风格，而不是 Anthropic 原生 Messages。
+
+再往里拆一层，这套代码其实做了三步转换。
+第一步，对外保留 OpenAI 风格入口。
+第二步，把请求里的 messages 按 role 转成 LangChain 的 HumanMessage、SystemMessage、AIMessage、ToolMessage。
+第三步，再把内部消息包装回 chat.completion.chunk，并用 SSE 持续输出，最后补一个 [DONE]。
+
+这段实现特别适合理解一件事：
+很多兼容层真正做的不是“换模型”，而是“把协议外观翻译成内部消息语义，再翻译回另一套协议外观”。
+
+如果只想用一句话记住：
+Anthropic 和 OpenAI 是同类接口，但不是同协议。
+
+所以做适配时，最稳妥的方法不是硬转字段，而是先在内部建立统一抽象：systemPrompt、contentBlocks、toolCalls、toolResults、usage、streamEvents，然后分别映射到不同厂商。
+
+这样以后不管你接 Claude、GPT，还是再加别的模型供应商，业务层都不会被底层协议细节拖住。
+
+如果你最近正在做大模型网关、Agent 框架或者多模型兼容，这个问题一定值得先想清楚。
+
+[小红书标签]
+#Anthropic #OpenAI #Claude #大模型开发 #AI工程化 #Agent开发 #API设计 #流式输出

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1440px;
+    background: linear-gradient(135deg, #0f172a 0%, #111827 45%, #1e293b 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    display: flex; flex-direction: column;
+    padding: 76px 68px;
+  }
+  .badge {
+    display: inline-block;
+    align-self: flex-start;
+    background: rgba(59,130,246,0.16);
+    border: 1px solid rgba(96,165,250,0.35);
+    border-radius: 999px;
+    padding: 10px 24px;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 34px;
+    color: #bfdbfe;
+  }
+  .title {
+    font-size: 68px;
+    line-height: 1.18;
+    font-weight: 800;
+    margin-bottom: 18px;
+  }
+  .title .highlight { color: #60a5fa; }
+  .subtitle {
+    font-size: 30px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.5;
+    margin-bottom: 48px;
+  }
+  .panel {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 28px;
+    padding: 28px 30px;
+    margin-bottom: 28px;
+  }
+  .panel-title {
+    font-size: 24px;
+    color: #93c5fd;
+    font-weight: 700;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+  }
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    flex: 1;
+  }
+  .point {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 22px;
+    padding: 22px 22px;
+  }
+  .num {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .point-main {
+    font-size: 32px;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+  .point-desc {
+    font-size: 24px;
+    line-height: 1.45;
+    margin-top: 6px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 500;
+  }
+  .footer {
+    margin-top: 34px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-top: 24px;
+  }
+  .source {
+    font-size: 22px;
+    color: rgba(255,255,255,0.48);
+  }
+  .tag {
+    border-radius: 12px;
+    border: 1px solid rgba(96,165,250,0.35);
+    background: rgba(59,130,246,0.12);
+    color: #bfdbfe;
+    padding: 8px 16px;
+    font-size: 22px;
+    margin-left: 12px;
+  }
+</style>
+</head>
+<body>
+  <div class="badge">LLM 工程实践</div>
+  <div class="title">一次抓包看懂<br><span class="highlight">Claude Code</span> 怎么喂模型</div>
+  <div class="subtitle">从真实请求结构出发，拆清 prompt、messages、context 和流式输出的关系</div>
+
+  <div class="panel">
+    <div class="panel-title">核心结论</div>
+    <div style="font-size: 31px; line-height: 1.5; font-weight: 600; color: rgba(255,255,255,0.9);">
+      agent 产品发给模型的，从来不是“用户一句话”，而是一整包被编排过的运行时上下文。
+    </div>
+  </div>
+
+  <div class="stack">
+    <div class="point">
+      <div class="num">1</div>
+      <div>
+        <div class="point-main">prompt 不是单一字段</div>
+        <div class="point-desc">system、messages、tools description 都在共同影响模型行为。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="num">2</div>
+      <div>
+        <div class="point-main">tools 也是上下文负载</div>
+        <div class="point-desc">工具不仅是 schema，更是告诉模型何时调用、如何调用的行为说明。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="num">3</div>
+      <div>
+        <div class="point-main">用户输入常常只占很小一部分</div>
+        <div class="point-desc">大头 token 往往来自系统规则、环境说明、能力清单和缓存前缀。</div>
+      </div>
+    </div>
+
+    <div class="point">
+      <div class="num">4</div>
+      <div>
+        <div class="point-main">流式输出本质是 SSE 事件流</div>
+        <div class="point-desc">真实客户端要按事件累计，而不是把第一段响应当成完整结果。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="source">学习笔记沉淀</div>
+    <div>
+      <span class="tag">#ClaudeCode</span>
+      <span class="tag">#AIAgent</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Claude Code WebSearch Terminal Demo</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    width: 1600px;
+    height: 900px;
+    background: #0b1020;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    color: #e5e7eb;
+  }
+  .frame {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+    padding: 28px;
+  }
+  .panel {
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    border: 1px solid rgba(148,163,184,0.18);
+    background: #0b1220;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    overflow: hidden;
+  }
+  .toolbar {
+    height: 54px;
+    background: #111827;
+    border-bottom: 1px solid rgba(148,163,184,0.12);
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    gap: 10px;
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .red { background: #ef4444; }
+  .yellow { background: #f59e0b; }
+  .green { background: #22c55e; }
+  .title {
+    margin-left: 12px;
+    color: #94a3b8;
+    font-size: 18px;
+  }
+  .content {
+    padding: 24px 28px;
+    font-size: 28px;
+    line-height: 1.65;
+  }
+  .prompt {
+    color: #d1d5db;
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .arrow {
+    color: #9ca3af;
+    margin-right: 14px;
+    font-weight: 700;
+  }
+  .querybar {
+    flex: 1;
+    background: #e5e7eb;
+    color: #111827;
+    border-radius: 3px;
+    padding: 4px 12px;
+  }
+  .tool {
+    margin-top: 18px;
+    margin-left: 10px;
+  }
+  .bullet {
+    color: #84cc16;
+    margin-right: 14px;
+  }
+  .toolname {
+    color: #e5e7eb;
+    font-weight: 700;
+  }
+  .hl {
+    background: rgba(167,139,250,0.2);
+    color: #d8b4fe;
+    padding: 2px 6px;
+    border-radius: 6px;
+  }
+  .sub {
+    color: #cbd5e1;
+    margin-left: 34px;
+    font-size: 24px;
+  }
+  .muted {
+    color: #94a3b8;
+  }
+  .tag {
+    position: absolute;
+    right: 48px;
+    bottom: 36px;
+    color: #93c5fd;
+    font-size: 24px;
+    padding: 10px 16px;
+    border: 1px solid rgba(96,165,250,0.28);
+    border-radius: 12px;
+    background: rgba(30,41,59,0.85);
+  }
+  .wrap { position: relative; width: 100%; height: calc(100% - 54px); }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <div class="panel">
+      <div class="toolbar">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+        <div class="title">Claude Code · local CLI rendering</div>
+      </div>
+      <div class="wrap">
+        <div class="content">
+          <div class="prompt">
+            <span class="arrow">›</span>
+            <div class="querybar">langsmith有托管并观测skill的功能吗</div>
+          </div>
+
+          <div class="tool"><span class="bullet">●</span><span class="toolname">Web Search</span>(<span class="hl">"LangSmith hosted agents observability"</span> skills LangGraph Platform deployment tracing")</div>
+          <div class="sub">└ <span class="muted">Did 1 search in 1s</span></div>
+
+          <div class="tool"><span class="bullet">●</span><span class="toolname">Web Search</span>("site:docs.langchain.com/langsmith deploy agents LangSmith observability")</div>
+          <div class="sub">└ <span class="muted">Did 1 search in 842ms</span></div>
+
+          <div class="tool"><span class="bullet">●</span><span class="toolname">Web Search</span>("site:docs.langchain.com/langsmith skills tools prompts LangSmith")</div>
+          <div class="sub">└ <span class="muted">Did 1 search in 860ms</span></div>
+
+          <div class="tool"><span class="bullet">●</span><span class="toolname">Web Search</span>("LangSmith observability tracing docs agent")</div>
+          <div class="sub">└ <span class="muted">Did 1 search in 1s</span></div>
+        </div>
+        <div class="tag">CLI 把 tool_use 渲染成可读日志</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
