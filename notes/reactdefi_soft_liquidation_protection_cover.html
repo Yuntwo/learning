@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeFi 软清算保护封面</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      width: 1080px;
+      height: 1440px;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: #07111f;
+      color: #eef4ff;
+    }
+    body {
+      position: relative;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(64, 196, 255, 0.20), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(103, 80, 255, 0.22), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(0, 224, 198, 0.16), transparent 30%),
+        linear-gradient(180deg, #08101c 0%, #0b1726 48%, #08131f 100%);
+    }
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(126, 156, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(126, 156, 255, 0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.08));
+    }
+    .wrap {
+      position: relative;
+      z-index: 1;
+      padding: 96px 72px 72px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      width: fit-content;
+      padding: 14px 22px;
+      border-radius: 999px;
+      color: #9dd7ff;
+      background: rgba(18, 34, 55, 0.72);
+      border: 1px solid rgba(121, 165, 255, 0.25);
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #5be7ff 0%, #5f8cff 100%);
+      box-shadow: 0 0 18px rgba(91, 231, 255, 0.7);
+    }
+    h1 {
+      margin: 40px 0 18px;
+      font-size: 88px;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      font-weight: 800;
+    }
+    .subtitle {
+      font-size: 34px;
+      line-height: 1.6;
+      color: rgba(230, 239, 255, 0.82);
+      max-width: 880px;
+      margin-bottom: 52px;
+    }
+    .panel {
+      padding: 28px 30px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(16, 31, 51, 0.90), rgba(9, 21, 37, 0.86));
+      border: 1px solid rgba(123, 170, 255, 0.20);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(6px);
+    }
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+      margin-bottom: 28px;
+    }
+    .mini {
+      border-radius: 24px;
+      padding: 24px 24px 22px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .mini .label {
+      font-size: 24px;
+      color: #86bfff;
+      margin-bottom: 10px;
+    }
+    .mini .value {
+      font-size: 42px;
+      font-weight: 760;
+      margin-bottom: 8px;
+    }
+    .mini .desc {
+      font-size: 24px;
+      line-height: 1.5;
+      color: rgba(235, 242, 255, 0.78);
+    }
+    .cards {
+      margin-top: auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+    .card {
+      min-height: 190px;
+      padding: 26px 26px 24px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(17, 34, 57, 0.92), rgba(12, 24, 42, 0.85));
+      border: 1px solid rgba(115, 163, 255, 0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .card .kicker {
+      font-size: 22px;
+      color: #8fd0ff;
+      margin-bottom: 12px;
+    }
+    .card .title {
+      font-size: 42px;
+      font-weight: 760;
+      margin-bottom: 12px;
+    }
+    .card .text {
+      font-size: 24px;
+      line-height: 1.55;
+      color: rgba(233, 241, 255, 0.78);
+    }
+    .footer {
+      margin-top: 26px;
+      font-size: 22px;
+      color: rgba(205, 220, 255, 0.62);
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="wrap">
+    <div class="badge"><span class="dot"></span> DeFi 风险管理</div>
+
+    <h1>软清算保护<br>到底在保护什么？</h1>
+    <div class="subtitle">把“被动等强平”改成“风险上升时自动修复” —— 这才是自动化风控真正有价值的地方。</div>
+
+    <div class="panel">
+      <div class="compare">
+        <div class="mini">
+          <div class="label">传统方式</div>
+          <div class="value">硬清算</div>
+          <div class="desc">靠近清算线后才被动处置，用户体感通常是突发且不可逆。</div>
+        </div>
+        <div class="mini">
+          <div class="label">改进思路</div>
+          <div class="value">软保护</div>
+          <div class="desc">在健康因子恶化但仍可修复时，自动补仓或还债，把头寸拉回安全区。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="kicker">重点 01</div>
+        <div class="title">提前介入</div>
+        <div class="text">不是等触发最终清算才动作，而是在风险出现趋势时先响应。</div>
+      </div>
+      <div class="card">
+        <div class="kicker">重点 02</div>
+        <div class="title">双阈值</div>
+        <div class="text">用“触发值 + 目标值”定义何时启动，以及恢复到哪里才停止。</div>
+      </div>
+      <div class="card">
+        <div class="kicker">重点 03</div>
+        <div class="title">三种模式</div>
+        <div class="text">追加抵押、偿还债务、组合调整，对应不同的风险处理思路。</div>
+      </div>
+      <div class="card">
+        <div class="kicker">重点 04</div>
+        <div class="title">持续监控</div>
+        <div class="text">检查频率决定反应速度，也决定策略执行的节奏与扰动。</div>
+      </div>
+    </div>
+
+    <div class="footer">长文学习笔记 · 收藏向梳理</div>
+  </div>
+</body>
+</html>

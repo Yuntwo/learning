@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px;
+    height: 1440px;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(56, 189, 248, 0.22), transparent 28%),
+      radial-gradient(circle at 85% 18%, rgba(99, 102, 241, 0.24), transparent 26%),
+      linear-gradient(140deg, #020617 0%, #0f172a 42%, #111827 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 78px 72px;
+  }
+  .badge {
+    display: inline-block;
+    align-self: flex-start;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 999px;
+    padding: 10px 24px;
+    font-size: 24px;
+    letter-spacing: 2px;
+    color: #cbd5e1;
+    margin-bottom: 34px;
+  }
+  .title {
+    font-size: 70px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 18px;
+  }
+  .title .highlight { color: #67e8f9; }
+  .subtitle {
+    font-size: 30px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 50px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    flex: 1;
+  }
+  .card {
+    display: flex;
+    gap: 20px;
+    padding: 28px 28px;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    backdrop-filter: blur(10px);
+  }
+  .num {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #22d3ee, #6366f1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .card-title {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.28;
+  }
+  .card-desc {
+    margin-top: 7px;
+    font-size: 24px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.62);
+  }
+  .footer {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-left {
+    font-size: 24px;
+    color: rgba(255,255,255,0.5);
+  }
+  .tag {
+    padding: 8px 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(103,232,249,0.38);
+    background: rgba(103,232,249,0.12);
+    color: #a5f3fc;
+    font-size: 22px;
+  }
+</style>
+</head>
+<body>
+  <div class="badge">AI × 支付趋势</div>
+  <div class="title">智能体支付<br><span class="highlight">到底要重写什么？</span></div>
+  <div class="subtitle">不是多一个付款按钮，而是把交易流程改造成机器可执行、可验证、可结算的系统</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="num">1</div>
+      <div>
+        <div class="card-title">交易执行者变了</div>
+        <div class="card-desc">从人手动付款，变成智能体代为搜索、协商、调用与结算。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="num">2</div>
+      <div>
+        <div class="card-title">支付结构也变了</div>
+        <div class="card-desc">高频、低额、带条件、可组合的交易，会越来越常见。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="num">3</div>
+      <div>
+        <div class="card-title">三类关系会同时出现</div>
+        <div class="card-desc">人类到智能体、智能体到智能体、智能体到网络。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="num">4</div>
+      <div>
+        <div class="card-title">核心不只是支付接口</div>
+        <div class="card-desc">更关键的是身份、授权、策略钱包、验证与即时清算。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="num">5</div>
+      <div>
+        <div class="card-title">先落地的会是高价值场景</div>
+        <div class="card-desc">对话式采购、微支付访问、数据调用和机器间服务结算。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">学习笔记 · Agent 支付基础设施</div>
+    <div class="tag">#AI商业化</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1080, initial-scale=1.0" />
+  <title>infini builder payment cover</title>
+  <style>
+    :root {
+      --bg1: #07111f;
+      --bg2: #0c1d33;
+      --bg3: #102a46;
+      --line: rgba(103, 189, 255, 0.22);
+      --text: #f4f8ff;
+      --muted: #9eb6d4;
+      --accent: #6ee7ff;
+      --accent2: #6d8cff;
+      --card: rgba(10, 18, 34, 0.72);
+      --glow: rgba(110, 231, 255, 0.18);
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      width: 1080px;
+      height: 1440px;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Helvetica Neue", sans-serif;
+      background: radial-gradient(circle at 15% 20%, rgba(109, 140, 255, 0.20), transparent 28%),
+                  radial-gradient(circle at 85% 18%, rgba(110, 231, 255, 0.16), transparent 24%),
+                  radial-gradient(circle at 50% 100%, rgba(75, 160, 255, 0.16), transparent 30%),
+                  linear-gradient(160deg, var(--bg1), var(--bg2) 48%, var(--bg3));
+      color: var(--text);
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    body::before {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.12));
+    }
+
+    body::after {
+      background: linear-gradient(180deg, transparent 0%, rgba(3, 8, 18, 0.32) 100%);
+    }
+
+    .frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 86px 78px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .topline {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--accent);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .topline::before {
+      content: "";
+      width: 64px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      box-shadow: 0 0 18px var(--glow);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 80px;
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      max-width: 900px;
+    }
+
+    .highlight {
+      background: linear-gradient(90deg, #79f0ff 0%, #b9c7ff 48%, #77dcff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      margin-top: 28px;
+      max-width: 860px;
+      font-size: 31px;
+      line-height: 1.65;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 44px;
+    }
+
+    .card {
+      position: relative;
+      background: linear-gradient(180deg, rgba(16, 27, 48, 0.90), rgba(8, 16, 30, 0.80));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 26px 28px 24px;
+      min-height: 170px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 18px 50px rgba(0,0,0,0.24);
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: auto -25% -45% auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(110,231,255,0.12), transparent 68%);
+      pointer-events: none;
+    }
+
+    .num {
+      font-size: 20px;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 34px;
+      line-height: 1.22;
+      font-weight: 750;
+      color: #ffffff;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.55;
+      color: #b7c7dd;
+    }
+
+    .footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: 28px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      background: rgba(8, 18, 34, 0.72);
+      border: 1px solid rgba(110, 231, 255, 0.24);
+      color: #dff6ff;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .tag::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 16px rgba(110,231,255,0.85);
+    }
+
+    .corner {
+      color: rgba(199, 214, 235, 0.82);
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div>
+      <div class="topline">Payment System Thinking</div>
+      <h1>
+        很多好项目<br />
+        死在不会<span class="highlight">收钱</span>
+      </h1>
+      <div class="subtitle">
+        不是支付按钮没接上，<br />
+        而是商业化最后一公里没有被系统化。
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="num">01</div>
+          <h2>收钱只是开始</h2>
+          <p>真正难的是把收款、出金、对账、团队支出串成完整闭环。</p>
+        </div>
+        <div class="card">
+          <div class="num">02</div>
+          <h2>支付要能运营</h2>
+          <p>链接、账单、API、企业卡，本质上是在解决不同商业场景。</p>
+        </div>
+        <div class="card">
+          <div class="num">03</div>
+          <h2>财务不该靠人肉</h2>
+          <p>自动分类、票据沉淀、订阅识别和总览，决定长期管理成本。</p>
+        </div>
+        <div class="card">
+          <div class="num">04</div>
+          <h2>下一站是 Agent</h2>
+          <p>未来不是更多看板，而是能给建议、做提醒、推动流程的财务代理。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="tag">商业化最后一公里</div>
+      <div class="corner">技术学习笔记</div>
+    </div>
+  </div>
+</body>
+</html>

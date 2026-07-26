@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1440px;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(64, 140, 255, 0.22), transparent 30%),
+      radial-gradient(circle at 80% 18%, rgba(0, 235, 214, 0.18), transparent 28%),
+      radial-gradient(circle at 50% 85%, rgba(130, 80, 255, 0.18), transparent 30%),
+      linear-gradient(145deg, #07111f 0%, #0b1630 45%, #111a38 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #ffffff;
+    padding: 86px 72px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.1));
+    pointer-events: none;
+  }
+  .badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    width: fit-content;
+    padding: 12px 22px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    font-size: 24px;
+    color: rgba(255,255,255,0.88);
+    letter-spacing: 1px;
+    margin-bottom: 34px;
+    backdrop-filter: blur(10px);
+  }
+  .badge .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #59e1ff;
+    box-shadow: 0 0 14px rgba(89,225,255,0.8);
+  }
+  .title {
+    position: relative;
+    font-size: 74px;
+    line-height: 1.16;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+  .title .em { color: #62d6ff; }
+  .subtitle {
+    position: relative;
+    font-size: 30px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 48px;
+    max-width: 860px;
+  }
+  .cards {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+  }
+  .card {
+    display: flex;
+    gap: 20px;
+    padding: 24px 26px;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.10);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  }
+  .num {
+    flex: 0 0 56px;
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 800;
+    color: #06111e;
+    background: linear-gradient(135deg, #7be7ff 0%, #7b8cff 100%);
+  }
+  .card h3 {
+    font-size: 34px;
+    line-height: 1.28;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .card p {
+    font-size: 24px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.66);
+  }
+  .footer {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .footer .left {
+    font-size: 24px;
+    color: rgba(255,255,255,0.55);
+  }
+  .tags {
+    display: flex;
+    gap: 12px;
+  }
+  .tag {
+    padding: 8px 16px;
+    border-radius: 14px;
+    background: rgba(98,214,255,0.14);
+    border: 1px solid rgba(98,214,255,0.26);
+    color: #8be4ff;
+    font-size: 22px;
+  }
+</style>
+</head>
+<body>
+  <div class="badge"><span class="dot"></span><span>推荐项目视角</span></div>
+  <div class="title">这 8 个 <span class="em">AI × Web3</span><br>项目更值得继续看</div>
+  <div class="subtitle">不是只看谁拿奖，而是看谁把交互、链上洞察、支付执行和授权边界做成了真正可落地的系统。</div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="num">1</div>
+      <div>
+        <h3>先看“能不能执行”</h3>
+        <p>从理解意图到触发链上动作，关键不只是模型聪不聪明，而是执行链是否完整。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="num">2</div>
+      <div>
+        <h3>支付与授权是硬门槛</h3>
+        <p>一旦 Agent 从建议者变成执行者，预算、审批、留痕和异常处理都会变成核心问题。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="num">3</div>
+      <div>
+        <h3>信息解释层也很关键</h3>
+        <p>链上研究、预测市场、数据洞察项目，决定了 Agent 能不能先把复杂世界讲明白。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="num">4</div>
+      <div>
+        <h3>值得关注的 3 条主线</h3>
+        <p>交互体验、研究判断、支付执行，基本就是这一轮 AI × Web3 的核心主战场。</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="num">5</div>
+      <div>
+        <h3>重点看长期结构</h3>
+        <p>真正值得跟的，往往是那些能从一个 demo 长成工作流或基础设施的平台型项目。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="left">技术趋势 · 项目推荐</div>
+    <div class="tags"><span class="tag">#AIAgent</span><span class="tag">#Web3</span></div>
+  </div>
+</body>
+</html>
