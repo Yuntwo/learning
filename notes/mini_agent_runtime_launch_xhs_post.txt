@@ -1,0 +1,91 @@
+[小红书标题]
+我把 agent runtime 项目开源了，欢迎来共建
+
+[小红书正文]
+最近把自己做的一个小项目整理成公开仓库了：mini-agent-runtime。
+
+这次我想分享的不是“又做了一个 AI demo”，而是我怎么把一个更适合面试、也更适合长期迭代的 agent runtime 项目整理出来。
+
+很多 agent 项目一上来就先做 UI、接模型、堆功能。
+但如果真的想把这个方向讲清楚，我越来越觉得，最值得下功夫的是 runtime 本身：任务怎么拆、什么时候该规划、记忆怎么隔离、工具怎么调度、上下文爆了怎么办。
+
+所以这次公开的 mini-agent-runtime，重点放在这些核心问题上：
+
+1. 先把 agent 的主链路拆清楚
+这个项目不是单纯“输入一句话 -> 返回一句话”。
+我把它拆成了 observe -> decide -> act -> record 这条主线。
+
+这样做的好处是：
+- 面试时更容易解释整个执行过程
+- 后面接 planner、memory、tooling 会更自然
+- 代码边界也更清晰，不容易一开始就写成一团
+
+2. 简单任务直接 react，复杂任务再 plan-react
+我不想把所有请求都强行变成“先规划再执行”。
+
+所以现在的设计是：
+- 简单请求直接走 react
+- 更复杂、更像多步骤任务的请求，再切到 plan-react
+
+我觉得这点很重要。
+因为很多时候，agent 系统真正的价值不只是“能规划”，而是“知道什么时候该规划”。
+
+3. Memory 不只是拼历史消息
+这个项目里我保留了一个我自己很在意的细节：
+把 recalled memory 包进单独的 memory fence，再通过 scrubber 做隔离。
+
+我想解决的问题是：
+回忆出来的信息，本质上是“参考上下文”，不应该和用户本轮真实输入混在一起。
+
+这个点平时 demo 里不一定显眼，但如果你真做 runtime，会发现它特别值得认真设计。
+
+4. Tooling 不是“能调就行”
+我这次也把 tool registry、dispatcher、tool name repair、参数修复这些逻辑保留了下来。
+
+因为真实的 agent 运行里，工具调用经常不是完美的。
+如果没有这些 runtime 细节，系统看起来能跑，但一遇到边界情况就很脆。
+
+5. 这个仓库更适合拿来共建，而不是只看个热闹
+我刻意把它整理成“一个可运行的最小 vertical slice + 一些清晰的扩展 seam”。
+
+也就是说，它不是那种一次性 demo 仓库。
+而是希望后面能继续往下补：
+- real LLM adapter
+- persistent memory backend
+- 真正可运行的 delegation
+- tracing / telemetry
+- 更安全的 tool sandbox
+
+如果你也在做 agent、LLM infra、工具链、runtime 设计，应该会比较容易看懂这个仓库的思路。
+
+我自己理解，这个项目现在最有价值的地方，不是“功能特别多”，而是它已经把一些关键问题明确放到了代码结构里：
+
+对照看会更直观：
+
+维度                纯聊天 Demo            mini-agent-runtime
+目标                先跑出效果             先把 runtime 拆清楚
+执行方式            单轮响应为主           observe->decide->act->record
+规划能力            通常没有               有 simple / complex 切换
+记忆处理            直接拼上下文           memory fence + scrubber
+工具机制            能调用就行             注册、分发、修复、todo 保留
+扩展性              容易耦合               skill / delegation / MCP 留好边界
+
+如果你最近也在想：
+- agent runtime 到底该怎么拆
+- 面试项目怎么做得更像“有工程判断”而不是“功能堆叠”
+- 想找一个适合继续改造的极简 agent 项目
+
+欢迎来看看这个仓库。
+
+如果你愿意：
+- 给个 star，我会很开心
+- 提 issue，说说你最想补哪块能力
+- 直接来共建，一起把它打磨成一个更像样的 agent runtime 样本
+
+如果只记住一句话，那就是：
+与其急着把 agent 做得“什么都能干”，不如先把 runtime 这层基础打结实。
+
+欢迎大家来共建，也欢迎 star 支持。
+
+[小红书标签]
+#AIAgent #Agent工程 #LLM应用 #AI编程 #开源项目 #程序员成长 #面试项目
