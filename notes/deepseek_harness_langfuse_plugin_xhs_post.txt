@@ -1,0 +1,39 @@
+[小红书标题]
+DSH插件生态开始有意思了
+
+[小红书正文]
+最近看了下 DeepSeek Harness 的基本原理，也顺手看了几个很优秀的 plugin demo，感觉 DSH 插件生态开始有点意思了。
+
+我自己先做了一个：
+dsh-langfuse-plugin
+作用是把 DSH 的 session telemetry 上报到 Langfuse。
+
+我觉得它的意义不只是“能上报 trace”，而是相比官方 trace，后面可以往更完整的 observation、score、dataset 这些能力继续扩。
+
+主角项目放最前面，欢迎 star / contribute：
+https://github.com/Yuntwo/dsh-langfuse-plugin
+
+另外几个我觉得很有趣的 demo：
+
+1. dsh-visualize
+让模型在对话里直接生成交互 UI 卡片
+https://github.com/Nagi-ovo/dsh-visualize
+
+2. dsh-stock-watch
+把 DSH Web UI 改造成一个股票盯盘工作台
+https://github.com/Awu12277/dsh-stock-watch
+
+3. dsh-agent-teams
+把单个 session 扩成一个多 Agent 协作团队
+https://github.com/NanmiCoder/dsh-agent-teams/tree/main
+
+这几个 demo 合起来看，DSH 插件现在至少已经能往三个方向长：
+- UI 增强
+- 垂直工作台
+- 观测 / 协作这类系统能力
+
+如果只记住一句话，那就是：
+DSH 不只是一个对话壳，插件生态已经开始长出来了。
+
+[小红书标签]
+#DeepSeekHarness #DSH #Langfuse #插件开发 #开源项目 #LLMOps

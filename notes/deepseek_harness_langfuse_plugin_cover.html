@@ -1,0 +1,196 @@
+<title>DSH插件生态</title>
+<style>
+  :root {
+    --bg: radial-gradient(circle at top, #172554 0%, #0b1020 40%, #050816 100%);
+    --text: #f8fafc;
+    --muted: #cbd5e1;
+    --line: rgba(148, 163, 184, 0.22);
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --good: #34d399;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    width: 1080px;
+    height: 1440px;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  .canvas {
+    width: 100%;
+    height: 1440px;
+    padding: 58px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .glow {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(80px);
+    opacity: 0.28;
+    pointer-events: none;
+  }
+  .glow.a { width: 320px; height: 320px; background: #38bdf8; top: -90px; right: -60px; }
+  .glow.b { width: 360px; height: 360px; background: #8b5cf6; left: -120px; bottom: 120px; }
+  .badge {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 999px;
+    background: rgba(14, 165, 233, 0.12);
+    color: #bae6fd;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  h1 {
+    margin: 24px 0 10px;
+    font-size: 76px;
+    line-height: 1.06;
+    letter-spacing: -2px;
+  }
+  .subtitle {
+    width: 920px;
+    color: var(--muted);
+    font-size: 31px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .hero {
+    padding: 26px 28px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.16), rgba(99, 102, 241, 0.14));
+    border: 1px solid rgba(125, 211, 252, 0.26);
+    margin-bottom: 18px;
+  }
+  .hero .label {
+    font-size: 22px;
+    color: #bfdbfe;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .hero .name {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: #ecfeff;
+  }
+  .hero .desc {
+    margin-top: 10px;
+    font-size: 25px;
+    line-height: 1.45;
+    color: #dbeafe;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 0;
+  }
+  .card {
+    padding: 22px 24px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.96), rgba(15, 23, 42, 0.92));
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 48px rgba(2, 8, 23, 0.32);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .index {
+    font-size: 24px;
+    font-weight: 800;
+    color: #7dd3fc;
+    letter-spacing: 1px;
+  }
+  .card h2 {
+    margin: 0 0 8px;
+    font-size: 31px;
+    line-height: 1.2;
+  }
+  .card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 22px;
+    line-height: 1.45;
+  }
+  .footer {
+    position: absolute;
+    left: 56px;
+    right: 56px;
+    bottom: 58px;
+    padding: 24px 28px;
+    border-radius: 26px;
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.16), rgba(129, 140, 248, 0.14));
+    border: 1px solid rgba(125, 211, 252, 0.28);
+  }
+  .footer .label {
+    font-size: 20px;
+    color: #bfdbfe;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .footer .text {
+    font-size: 31px;
+    line-height: 1.4;
+    font-weight: 700;
+  }
+  .accent { color: #67e8f9; }
+  .accent2 { color: #a5b4fc; }
+  .good { color: #6ee7b7; }
+</style>
+<div class="canvas">
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+
+  <div class="badge">DSH 插件观察</div>
+  <h1>我做了一个<br>Langfuse Trace 插件</h1>
+  <div class="subtitle">主角先放最前面：<span class="accent">dsh-langfuse-plugin</span>。沿官方 telemetry seam 做 sidecar，把 DSH 会话过程接进 <span class="accent2">Langfuse</span> 更完整的观测体系。</div>
+
+  <div class="hero">
+    <div class="label">主角项目</div>
+    <div class="name">Yuntwo / dsh-langfuse-plugin</div>
+    <div class="desc">重点不是替代官方 trace，而是补齐 <span class="good">trace / observation / score / dataset</span> 这条工程链路。</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="row">
+        <div class="index">参考 01</div>
+        <div>
+          <h2>dsh-visualize</h2>
+          <p>让模型在对话里直接生成 <span class="accent">交互 UI 卡片</span>，说明 DSH 不只会输出文本。</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row">
+        <div class="index">参考 02</div>
+        <div>
+          <h2>dsh-stock-watch</h2>
+          <p>把 DSH Web UI 改造成 <span class="accent2">垂直业务工作台</span>，常驻面板这条路很有意思。</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row">
+        <div class="index">参考 03</div>
+        <div>
+          <h2>dsh-agent-teams</h2>
+          <p>把单会话扩成 <span class="good">多 Agent 协作团队</span>，能看到编排和调度层的想象空间。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="label">如果只记住一句话</div>
+    <div class="text">DSH 插件开始有生态感了，而观测类插件会是里面很有工程价值的一条线。</div>
+  </div>
+</div>

@@ -1,0 +1,169 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Complexity Cover</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg1: #07111f;
+    --bg2: #0d1b2f;
+    --panel: rgba(15, 25, 45, 0.78);
+    --panel-border: rgba(120, 170, 255, 0.22);
+    --text: #eef4ff;
+    --muted: #9fb3d9;
+    --cyan: #67e8f9;
+    --blue: #7c9cff;
+    --violet: #a78bfa;
+    --green: #5eead4;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    width: 1080px;
+    height: 1440px;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background:
+      radial-gradient(circle at 18% 16%, rgba(103, 232, 249, 0.22), transparent 28%),
+      radial-gradient(circle at 86% 12%, rgba(167, 139, 250, 0.24), transparent 24%),
+      radial-gradient(circle at 80% 82%, rgba(94, 234, 212, 0.18), transparent 24%),
+      linear-gradient(180deg, var(--bg1), var(--bg2));
+    color: var(--text);
+  }
+  .frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 86px 72px;
+  }
+  .grid {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    height: 100%;
+    gap: 34px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(103, 232, 249, 0.26);
+    background: rgba(10, 18, 34, 0.55);
+    color: var(--cyan);
+    font-size: 26px;
+    letter-spacing: 0.08em;
+  }
+  h1 {
+    margin: 0;
+    font-size: 88px;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    max-width: 880px;
+  }
+  .subtitle {
+    max-width: 880px;
+    font-size: 32px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-content: start;
+  }
+  .card {
+    min-height: 230px;
+    padding: 28px 28px 24px;
+    border-radius: 28px;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+    backdrop-filter: blur(10px);
+  }
+  .tag {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 18px;
+    background: rgba(124, 156, 255, 0.14);
+    color: var(--blue);
+  }
+  .card:nth-child(2) .tag { color: var(--cyan); background: rgba(103, 232, 249, 0.12); }
+  .card:nth-child(3) .tag { color: var(--violet); background: rgba(167, 139, 250, 0.12); }
+  .card:nth-child(4) .tag { color: var(--green); background: rgba(94, 234, 212, 0.12); }
+  .card h2 {
+    margin: 0 0 12px;
+    font-size: 34px;
+    line-height: 1.25;
+  }
+  .card p {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.55;
+    color: #d7e3ff;
+  }
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 6px;
+    color: #b8c8ea;
+    font-size: 24px;
+  }
+  .formula {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px 26px;
+    border-radius: 24px;
+    background: rgba(9, 17, 31, 0.62);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .formula strong {
+    font-size: 26px;
+    color: var(--text);
+  }
+</style>
+<div class="frame">
+  <div class="grid">
+    <div class="eyebrow">ALGORITHM NOTE</div>
+    <div>
+      <h1>时间复杂度和空间复杂度怎么判断？</h1>
+      <div class="subtitle">别硬背结论，先抓住输入规模、处理次数、额外结构和递归栈。</div>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="tag">STEP 1</div>
+        <h2>先确认输入规模</h2>
+        <p>数组看长度，树看节点数，图要区分点数和边数，矩阵常写成 m × n。</p>
+      </div>
+      <div class="card">
+        <div class="tag">STEP 2</div>
+        <h2>时间看做了多少事</h2>
+        <p>用“总状态数 × 每个状态的处理成本”去想，重点看是否有重复计算。</p>
+      </div>
+      <div class="card">
+        <div class="tag">STEP 3</div>
+        <h2>空间看额外占用</h2>
+        <p>不要只看数组和哈希表，递归调用栈也必须算进去，树题尤其容易漏。</p>
+      </div>
+      <div class="card">
+        <div class="tag">STEP 4</div>
+        <h2>顺序加法，嵌套乘法</h2>
+        <p>两段循环先后执行通常是 O(n)，只有真正嵌套起来才会走向 O(n²)。</p>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="formula">
+        <strong>时间复杂度 = 总状态数 × 每个状态成本</strong>
+        <strong>空间复杂度 = 额外存储结构 + 递归栈</strong>
+      </div>
+      <div>适合刷题 / 面试复盘</div>
+    </div>
+  </div>
+</div>

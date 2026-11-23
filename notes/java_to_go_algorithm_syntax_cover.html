@@ -1,0 +1,155 @@
+<title>Java转Go刷题语法</title>
+<style>
+  :root {
+    --bg: radial-gradient(circle at top, #172554 0%, #0b1020 38%, #050816 100%);
+    --panel: rgba(15, 23, 42, 0.84);
+    --panel-strong: rgba(30, 41, 59, 0.92);
+    --text: #f8fafc;
+    --muted: #cbd5e1;
+    --line: rgba(148, 163, 184, 0.22);
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --good: #34d399;
+    --warn: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    width: 1080px;
+    height: 1440px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  .canvas {
+    width: 100%;
+    height: 100%;
+    padding: 72px 64px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .glow {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(70px);
+    opacity: 0.3;
+  }
+  .glow.a { width: 280px; height: 280px; background: #38bdf8; top: -60px; right: -40px; }
+  .glow.b { width: 360px; height: 360px; background: #8b5cf6; left: -100px; bottom: 240px; }
+  .badge {
+    align-self: flex-start;
+    padding: 10px 18px;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 999px;
+    background: rgba(14, 165, 233, 0.12);
+    color: #bae6fd;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  h1 {
+    margin: 28px 0 14px;
+    font-size: 78px;
+    line-height: 1.08;
+    letter-spacing: -2px;
+  }
+  .subtitle {
+    width: 880px;
+    color: var(--muted);
+    font-size: 34px;
+    line-height: 1.55;
+    margin-bottom: 36px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    margin-top: 10px;
+  }
+  .card {
+    min-height: 205px;
+    padding: 28px 28px 24px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.96), rgba(15, 23, 42, 0.9));
+    border: 1px solid var(--line);
+    box-shadow: 0 20px 60px rgba(2, 8, 23, 0.35);
+  }
+  .card .kicker {
+    font-size: 22px;
+    font-weight: 700;
+    color: #7dd3fc;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+  }
+  .card h2 {
+    margin: 0 0 10px;
+    font-size: 36px;
+    line-height: 1.2;
+  }
+  .card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 25px;
+    line-height: 1.5;
+  }
+  .footer {
+    margin-top: auto;
+    padding: 28px 30px;
+    border-radius: 28px;
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.16), rgba(129, 140, 248, 0.14));
+    border: 1px solid rgba(125, 211, 252, 0.28);
+  }
+  .footer .label {
+    font-size: 22px;
+    color: #bfdbfe;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .footer .text {
+    font-size: 34px;
+    line-height: 1.5;
+    font-weight: 700;
+  }
+  .accent { color: #67e8f9; }
+  .accent2 { color: #a5b4fc; }
+  .good { color: #6ee7b7; }
+  .warn { color: #fde68a; }
+</style>
+<div class="canvas">
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+  <div class="badge">算法题速记</div>
+  <h1>Java 转 Go<br>刷题语法差异</h1>
+  <div class="subtitle">别把时间耗在语法卡顿上。先把最常用的 <span class="accent">函数签名</span>、<span class="accent2">切片</span>、<span class="good">map 判存在</span> 和 <span class="warn">DFS 写法</span> 固定成模板。</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="kicker">01</div>
+      <h2>函数签名变了</h2>
+      <p><span class="accent">func f(nums []int) int</span><br>类型写在变量名后，返回值放最后。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">02</div>
+      <h2>没有 while</h2>
+      <p>双指针、滑窗、二分都改成<br><span class="accent2">for condition {}</span></p>
+    </div>
+    <div class="card">
+      <div class="kicker">03</div>
+      <h2>数组 ≠ 切片</h2>
+      <p><span class="good">[]int</span> 才是刷题主力。<br><span class="good">append</span> 后一定记得接返回值。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">04</div>
+      <h2>map 要配 ok</h2>
+      <p>Go 没有 containsKey。<br>判断存在要写 <span class="warn">v, ok := mp[x]</span></p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="label">最值得先记住的一句话</div>
+    <div class="text">Java 转 Go 刷题，真正要迁移的不是算法思路，而是那几套最常用的语法模板。</div>
+  </div>
+</div>

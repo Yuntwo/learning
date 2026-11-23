@@ -1,0 +1,147 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>项目深度封面</title>
+<style>
+  :root {
+    --bg1:#0b1020;
+    --bg2:#121a33;
+    --panel:rgba(255,255,255,0.08);
+    --border:rgba(255,255,255,0.12);
+    --text:#f7f9fc;
+    --muted:#b8c2d9;
+    --accent:#7cc7ff;
+    --accent2:#9b8cff;
+    --accent3:#59f0c2;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    width:1080px;
+    height:1440px;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Arial,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 20% 15%, rgba(124,199,255,.28), transparent 32%),
+      radial-gradient(circle at 85% 22%, rgba(155,140,255,.24), transparent 28%),
+      radial-gradient(circle at 50% 100%, rgba(89,240,194,.15), transparent 30%),
+      linear-gradient(180deg, var(--bg2), var(--bg1));
+    padding:72px 64px;
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+  }
+  .badge{
+    align-self:flex-start;
+    padding:10px 18px;
+    border:1px solid rgba(124,199,255,.35);
+    border-radius:999px;
+    color:var(--accent);
+    background:rgba(124,199,255,.08);
+    font-size:28px;
+    font-weight:700;
+    letter-spacing:.5px;
+  }
+  .title{
+    font-size:76px;
+    line-height:1.08;
+    font-weight:900;
+    letter-spacing:-1.8px;
+    margin-top:6px;
+    white-space:pre-line;
+  }
+  .subtitle{
+    font-size:34px;
+    line-height:1.45;
+    color:var(--muted);
+    max-width:900px;
+    margin-bottom:12px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+    margin-top:12px;
+  }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:28px;
+    padding:28px 28px 26px;
+    min-height:210px;
+    box-shadow:0 20px 60px rgba(0,0,0,.22);
+  }
+  .card .num{
+    font-size:22px;
+    color:var(--accent3);
+    font-weight:800;
+    margin-bottom:12px;
+  }
+  .card h3{
+    margin:0 0 12px;
+    font-size:38px;
+    line-height:1.18;
+  }
+  .card p{
+    margin:0;
+    font-size:28px;
+    line-height:1.45;
+    color:var(--muted);
+  }
+  .footer{
+    margin-top:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+  }
+  .quote{
+    max-width:760px;
+    font-size:34px;
+    line-height:1.45;
+    color:#eaf1ff;
+    font-weight:700;
+  }
+  .mark{
+    padding:16px 22px;
+    border-radius:22px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.1);
+    font-size:24px;
+    color:#d8e0f5;
+  }
+</style>
+<body>
+  <div class="badge">面试 / 简历 / 成长</div>
+  <div class="title">大厂干久了
+为什么一面试
+就像什么都不会？</div>
+  <div class="subtitle">不是你没做事，而是你把“平台经历”写成了“能力证明”。真正该沉淀的，是问题定义、方案取舍、系统抽象和复盘能力。</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="num">01</div>
+      <h3>别把平台当能力</h3>
+      <p>平台只是场景。你真正能带走的，是解决问题的方法。</p>
+    </div>
+    <div class="card">
+      <div class="num">02</div>
+      <h3>项目要讲判断</h3>
+      <p>不是罗列做了什么，而是说清楚为什么这样做、放弃了什么。</p>
+    </div>
+    <div class="card">
+      <div class="num">03</div>
+      <h3>CRUD 也能有深度</h3>
+      <p>关键不在业务表面，而在你有没有做模型抽象、机制治理和复杂度收敛。</p>
+    </div>
+    <div class="card">
+      <div class="num">04</div>
+      <h3>复盘才是含金量</h3>
+      <p>设计文档和故障复盘，最能体现一个工程师的成熟度。</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="quote">“平台不是你的能力。你解决问题的方式，才是你的个人资产。”</div>
+    <div class="mark">可直接发小红书</div>
+  </div>
+</body>

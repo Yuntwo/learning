@@ -1,0 +1,335 @@
+<!doctype html>
+<title>FDE 数字化阶段图</title>
+<style>
+  :root {
+    --bg: #f5f7fb;
+    --ink: #172033;
+    --muted: #5d6b85;
+    --line: #d8e0ee;
+    --card: #ffffff;
+    --shadow: 0 18px 40px rgba(23, 32, 51, 0.08);
+    --zero: #eef3ff;
+    --one: #fff6df;
+    --two: #e9f9ef;
+    --zero-strong: #5a78ff;
+    --one-strong: #e4a72c;
+    --two-strong: #22a06b;
+    --band-1: #eef3ff;
+    --band-2: #f7f0ff;
+    --band-3: #fff6df;
+    --band-4: #e9f9ef;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at top left, #dfe9ff 0, transparent 34%),
+      radial-gradient(circle at top right, #e7fff4 0, transparent 30%),
+      linear-gradient(180deg, #f9fbff 0%, var(--bg) 100%);
+  }
+  .page {
+    width: 1480px;
+    min-height: 1120px;
+    margin: 0 auto;
+    padding: 48px 56px 40px;
+  }
+  .hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: #4e68c7;
+    margin-bottom: 10px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 42px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    margin-top: 12px;
+    max-width: 880px;
+    font-size: 21px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .badge {
+    background: rgba(255,255,255,0.75);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 16px 18px;
+    min-width: 290px;
+    box-shadow: var(--shadow);
+  }
+  .badge .label {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .badge .value {
+    font-size: 18px;
+    line-height: 1.5;
+    font-weight: 700;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 1.6fr 0.95fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .panel-head {
+    padding: 24px 28px 0;
+  }
+  .panel-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 800;
+  }
+  .panel-note {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  table {
+    width: calc(100% - 32px);
+    margin: 18px 16px 16px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    font-size: 16px;
+  }
+  th, td {
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    padding: 18px 16px;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:last-child td { border-bottom: 0; }
+  th:last-child, td:last-child { border-right: 0; }
+  th {
+    font-size: 16px;
+    font-weight: 800;
+    text-align: left;
+    background: #f8faff;
+  }
+  .col-basic { width: 18%; }
+  .col-zero { width: 27%; background: var(--zero); }
+  .col-one { width: 27%; background: var(--one); }
+  .col-two { width: 28%; background: var(--two); }
+  .score-tag {
+    display: inline-block;
+    min-width: 34px;
+    text-align: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    color: white;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .zero-tag { background: var(--zero-strong); }
+  .one-tag { background: var(--one-strong); }
+  .two-tag { background: var(--two-strong); }
+  .basic-cell {
+    font-weight: 700;
+    background: #fbfcff;
+  }
+  .right-wrap {
+    padding: 22px;
+    display: grid;
+    gap: 14px;
+  }
+  .range-card {
+    border-radius: 20px;
+    padding: 18px 18px 16px;
+    border: 1px solid var(--line);
+  }
+  .range-card:nth-child(1) { background: var(--band-1); }
+  .range-card:nth-child(2) { background: var(--band-2); }
+  .range-card:nth-child(3) { background: var(--band-3); }
+  .range-card:nth-child(4) { background: var(--band-4); }
+  .range-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .range-score {
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+  .range-stage {
+    font-size: 17px;
+    font-weight: 800;
+  }
+  .range-desc {
+    color: #33405a;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .legend {
+    margin-top: 8px;
+    display: grid;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    flex: 0 0 12px;
+  }
+  .dot.zero { background: var(--zero-strong); }
+  .dot.one { background: var(--one-strong); }
+  .dot.two { background: var(--two-strong); }
+  .foot {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 0 6px;
+  }
+</style>
+<div class="page">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">FDE / Agent 落地判断</div>
+      <h1>企业数字化阶段自测表<br>与 Agent 介入路径</h1>
+      <div class="subtitle">
+        五个基础面决定企业当前是否具备接入 Agent 的前提。<br>
+        核心判断不是“模型强不强”，而是“组织有没有可落地的结构化支点”。
+      </div>
+    </div>
+    <div class="badge">
+      <div class="label">使用方式</div>
+      <div class="value">每个基础面按 0 / 1 / 2 打分，<br>总分决定切入方式与 PoC 时机。</div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="panel">
+      <div class="panel-head">
+        <h2 class="panel-title">企业数字化阶段自测表</h2>
+        <div class="panel-note">根据截图内容尽量还原，适合作为 FDE 现场初筛与沟通框架。</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th class="col-basic">基础面</th>
+            <th class="col-zero"><span class="score-tag zero-tag">0</span><br>低成熟度</th>
+            <th class="col-one"><span class="score-tag one-tag">1</span><br>过渡状态</th>
+            <th class="col-two"><span class="score-tag two-tag">2</span><br>较成熟</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="basic-cell">数据基础</td>
+            <td class="col-zero">散落在人和聊天记录里</td>
+            <td class="col-one">已有表格，但不完整</td>
+            <td class="col-two">结构清晰，持续更新</td>
+          </tr>
+          <tr>
+            <td class="basic-cell">工具 / AI 用量</td>
+            <td class="col-zero">偶尔尝试，成果不稳定</td>
+            <td class="col-one">部分岗位稳定使用</td>
+            <td class="col-two">高频使用，结果可回溯</td>
+          </tr>
+          <tr>
+            <td class="basic-cell">业务流程</td>
+            <td class="col-zero">三个人经验推进</td>
+            <td class="col-one">主流程基本齐全</td>
+            <td class="col-two">节点、责任和异常明确</td>
+          </tr>
+          <tr>
+            <td class="basic-cell">权限与风险</td>
+            <td class="col-zero">谁都能什么都看</td>
+            <td class="col-one">关键步骤人工确认</td>
+            <td class="col-two">有分级权限、日志和兜底</td>
+          </tr>
+          <tr>
+            <td class="basic-cell">运营与指标</td>
+            <td class="col-zero">无负责人、无基线</td>
+            <td class="col-one">有负责人或简单指标</td>
+            <td class="col-two">有指标、反馈和持续迭代</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2 class="panel-title">打分区间结论</h2>
+        <div class="panel-note">先做与组织成熟度匹配的方案，而不是直接推全流程自治 Agent。</div>
+      </div>
+      <div class="right-wrap">
+        <div class="range-card">
+          <div class="range-top">
+            <div class="range-score">0–3 分</div>
+            <div class="range-stage">先做个人人 Agent</div>
+          </div>
+          <div class="range-desc">适合先从检索、总结、写作、归纳等个人效率场景切入，不建议直接做组织级自动化。</div>
+        </div>
+        <div class="range-card">
+          <div class="range-top">
+            <div class="range-score">4–6 分</div>
+            <div class="range-stage">协作表格 + 自动化</div>
+          </div>
+          <div class="range-desc">适合“人仍在回路里”的协作增强：信息同步、提醒、表格流转、半自动生成与规则驱动流程。</div>
+        </div>
+        <div class="range-card">
+          <div class="range-top">
+            <div class="range-score">7–8 分</div>
+            <div class="range-stage">部分 AI 辅助</div>
+          </div>
+          <div class="range-desc">可在主流程中的部分节点接入 AI，但关键动作仍建议保留审批、校验与人工兜底。</div>
+        </div>
+        <div class="range-card">
+          <div class="range-top">
+            <div class="range-score">9–10 分</div>
+            <div class="range-stage">拿场景 PoC</div>
+          </div>
+          <div class="range-desc">组织基础较成熟，可围绕真实业务链路做场景级 PoC，验证 ROI、风险边界和可复制性。</div>
+        </div>
+
+        <div class="legend">
+          <div class="legend-item"><span class="dot zero"></span><span>0 分：信息散、流程弱、治理弱，不适合直接自动执行。</span></div>
+          <div class="legend-item"><span class="dot one"></span><span>1 分：有局部结构，可做“半自动 + 人工确认”的增强模式。</span></div>
+          <div class="legend-item"><span class="dot two"></span><span>2 分：结构清晰、治理较完整，更适合把 Agent 挂到真实流程上。</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    注：图表依据 FDE 分享截图整理，部分字词为结合截图语义后的保守还原。<br>
+    对 FDE 的启发是：Agent 落地首先是组织工程问题，其次才是模型问题。
+  </div>
+</div>

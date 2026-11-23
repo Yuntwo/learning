@@ -1,0 +1,198 @@
+[小红书标题]
+Java转Go刷题语法
+
+[小红书正文]
+如果你之前一直用 Java 刷算法题，后来切到 Go，最难受的地方通常不是题不会，而是语法会突然卡壳。
+
+明明思路都对，但一上手就容易在这些地方停顿：函数签名怎么写、map 怎么判断 key 存在、while 在 Go 里怎么写、数组和切片到底有什么区别、链表和二叉树定义怎么写。
+
+所以我把“Java 转 Go 做算法题最容易混的点”压缩成一版速记，重点不是学完整门 Go，而是把手撕题最常用的语法切换过来。
+
+1. 先记住一个总判断：Go 看起来简洁，但本质不是 Python
+
+很多人刚看 Go，会觉得它有点像 Python：if 和 for 不加括号，range 遍历也很顺。
+
+但如果你是拿它来写算法题，更好的理解方式其实是：
+Go = 更简洁的静态类型语言。
+
+也就是说，它在写法上比 Java 轻，但思维方式还是接近 Java / C，不是 Python 那种“容器和语法糖非常自由”的感觉。
+
+2. 函数签名是第一反应要改掉的地方
+
+Java 里你会写：
+int twoSum(int[] nums, int target)
+
+Go 里要切成：
+func twoSum(nums []int, target int) []int
+
+这里要强行建立两个新反应：
+- 参数写法是“变量名 + 类型”
+- 返回值写在参数列表后面
+
+只要函数签名切过来了，后面很多模板都会顺很多。
+
+3. 局部变量优先用 :=
+
+Java 常写：
+int x = 1;
+Map<Integer, Integer> map = new HashMap<>();
+
+Go 刷题更常写：
+x := 1
+mp := make(map[int]int)
+arr := []int{}
+
+如果只是算法题，绝大多数局部变量都可以直接用 :=。
+这个习惯一旦建立，写 Go 的速度会明显快很多。
+
+4. Go 没有 while，全部统一成 for
+
+这点在双指针、滑动窗口、二分里特别高频。
+
+Java：
+while (l < r) { ... }
+
+Go：
+for l < r { ... }
+
+可以直接把脑子里的规则改成：
+- 计数循环：for i := 0; i < n; i++ {}
+- while 风格：for condition {}
+- 遍历数组：for i, v := range nums {}
+
+5. 数组和切片不是一回事，但刷题几乎都用切片
+
+Go 里：
+- [5]int 是数组
+- []int 是切片
+
+做算法题时，函数参数基本都写 []int。
+
+比如：
+func maxSubArray(nums []int) int
+
+还有一个特别容易漏的点：
+append 可能返回新的切片，所以必须接住。
+
+正确写法：
+arr = append(arr, x)
+
+不要只写 append(arr, x)。
+
+6. map 判断存在，是 Java 转 Go 最大的高频坑之一
+
+Java 里常写：
+if (map.containsKey(x))
+
+Go 里没有 containsKey，要写成：
+if v, ok := mp[x]; ok {
+    ...
+}
+
+这里最关键的是：
+Go 里 mp[x] 即使不存在，也不会报错，而是返回零值。
+
+所以只看 mp[x] 很容易误判，判断存在一定要配合 ok。
+
+如果只记一个最重要的容器差异，我觉得就是这个。
+
+7. Go 没有内置 set，通常用 map 模拟
+
+Java：HashSet<Integer>
+Go：map[int]struct{}
+
+常见写法：
+set := map[int]struct{}{}
+set[x] = struct{}{}
+if _, ok := set[x]; ok {
+    ...
+}
+
+如果你只是面试求快，写 map[int]bool 也能接受。
+
+8. 字符串处理比 Java 更要小心
+
+Java：
+char c = s.charAt(0)
+
+Go：
+c := s[0]
+
+但这里拿到的是 byte。
+
+如果题目只涉及英文小写字母，这通常够用；
+如果涉及更一般的字符处理，就要转成 []rune。
+
+另外，Go 字符串默认不能像数组那样原地改字符，想修改通常要先转 []byte 或 []rune。
+
+9. 树和链表定义要适应 struct + 指针
+
+Java 里是 class。
+Go 里做题通常是 struct 配合指针：
+
+type ListNode struct {
+    Val  int
+    Next *ListNode
+}
+
+type TreeNode struct {
+    Val   int
+    Left  *TreeNode
+    Right *TreeNode
+}
+
+判空时也要从 null 切成 nil：
+if node == nil { return }
+
+10. DFS 闭包递归是隐藏坑
+
+如果写普通递归函数，其实不复杂。
+但如果想在函数内部定义 dfs 闭包，Go 需要先声明再赋值：
+
+var dfs func(node *TreeNode)
+dfs = func(node *TreeNode) {
+    if node == nil {
+        return
+    }
+    dfs(node.Left)
+    dfs(node.Right)
+}
+
+这个点在回溯和树题里很常卡住，提前记住能省很多时间。
+
+11. 还有几个面试里特别容易漏的小细节
+
+- Go 没有三元表达式，只能写 if
+- ++ 和 -- 只能单独成句，不能放进表达式
+- 长度统一用 len(...)
+- 排序常用 sort.Ints 和 sort.Slice
+
+可以把这些当成“最后 20% 的语法坑”，面试前扫一眼就够。
+
+最后给一个我觉得最实用的结论：
+
+如果你是 Java 转 Go，为了算法题，其实不用把 Go 整门语言学得很全。
+先把这几类高频差异练成固定模板：
+函数签名、:=、for 代替 while、切片、append、map 的 ok 写法、nil、struct 指针、字符串下标、DFS 闭包递归。
+
+这些一旦稳定，后面写题就会从“老是卡语法”变成“只是换了一套表达方式”。
+
+还有一个很容易被忽略、但实际很有代表性的差异：
+Java 没有原生多返回值，Go 可以直接返回多个结果。
+
+比如 Go 里很自然可以写：
+func calc(a, b int) (int, int)
+
+或者更高频一点：
+v, ok := mp[x]
+
+这类“结果 + 状态”的写法，在 Go 里几乎是日常；
+但在 Java 里，如果你想返回多个值，通常得额外封装对象、数组，或者用 record。
+
+所以从刷题视角看，Go 的多返回值不只是语法更短，还是一套更适合表达算法过程的方式。
+
+如果只记住一件事，那就是：
+Java 转 Go 刷题，真正要迁移的不是算法思路，而是那几套最常用的语法模板。
+
+[小红书标签]
+#Go #Golang #Java #算法题 #LeetCode #编程面试 #刷题 #后端开发
